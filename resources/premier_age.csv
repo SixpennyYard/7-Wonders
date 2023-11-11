@@ -1,3 +1,22 @@
-Nom, Cout, Offre
-Tour de garde,1 brique,1 guerre
-Bassins Argileux,,1 brique
+Nom, Cout, Offre, Cout: Enchainage
+Tour de garde,1 brique,1 guerre,
+Bassins Argileux,,1 brique,
+Comptoir Ouest,,marron gauche
+Comptoir Est,,marron droite
+Théâtre,,2 culture
+Palissade,1 bois,1 guerre
+Fosse Argileuse,1 pièce,1 brique / 1 or
+Marché,,Gris partout,
+Caserne,1 or,1 guerre,
+Atelier,1 verre,1 vert - Engrenage
+Bains,1 pierre,3 culture,
+Verrerie,,1 verre,
+Cavité,,1 pierre,
+Exploitation forestière,1 pièce,1 pierre / 1 bois,
+Scriptorium,1 papier,1 verre - Tablette,
+Officine,1 soie,1 verre - Compas,
+Filon,,1 or,
+Chantier,,1 bois,
+Presse,,1 papier
+Métier à tisser,,1 soie
+Autel,,2 culture
