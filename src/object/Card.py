@@ -1,12 +1,12 @@
 class Card:
-    def __init__(self, name, coast, offer, next_age_offer):
+    def __init__(self, name: str, coast: str, offer: str, free_offer: str = ""):
         """
         :param name: Nom de la carte
         :param coast: Coût de la carte
         :param offer: Ce que la carte offre
-        :param next_age_offer: Les possibles enchaînage de la carte pour l'âge suivant
+        :param free_offer: Les possibles enchaînage de la carte pour la construire
         """
         self.name = name
         self.coast = coast
         self.offer = offer
-        self.next_age_offer = next_age_offer
+        self.free_offer = free_offer
