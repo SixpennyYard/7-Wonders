@@ -1,22 +1,22 @@
-Nom, Cout, Offre
-Tour de garde, 1 brique, 1 guerre
-Bassins Argileux, , 1 brique
-Comptoir Ouest,,marron gauche
-Comptoir Est,, marron droite
-Theatre, , 2 culture
-Palissade, 1 bois, 1 guerre
-Fosse Argileuse, 1 piece, 1 brique / 1 or
-Marche, , Gris partout
-Caserne, 1 or, 1 guerr
-Atelier, 1 verre, 1 vert - Engrenage
-Bains, 1 pierre, 3 culture
-Verrerie, , 1 verre
-Cavite, , 1 pierre
-Exploitation forestiere, 1 piece, 1 pierre / 1 bois
-Scriptorium, 1 papier, 1 verre - Tablette
-Officine, 1 soie, 1 verre - Compas
-Filon, , 1 or
-Chantier, , 1 bois
-Presse, , 1 papier
-Metier a tisser, , 1 soie
-Autel, , 2 culture
+Nom, Cout, Offre,Couleur
+Tour de garde, 1 brique, 1 guerre,r
+Bassins Argileux,, 1 brique,b
+Comptoir Ouest,,marron gauche,y
+Comptoir Est,,marron droite,y
+Theatre,, 2 culture,blue
+Palissade, 1 bois, 1 guerre,r
+Fosse Argileuse, 1 piece, 1 brique / 1 or,b
+Marche,, Gris partout,y
+Caserne, 1 or, 1 guerre,r
+Atelier, 1 verre, 1 vert - Engrenage,g
+Bains, 1 pierre, 3 culture,blue
+Verrerie,, 1 verre,grey
+Cavite,, 1 pierre,b
+Exploitation forestiere, 1 piece, 1 pierre / 1 bois,b
+Scriptorium, 1 papier, 1 verre - Tablette,g
+Officine, 1 soie, 1 verre - Compas,g
+Filon,, 1 or,b
+Chantier,, 1 bois,b
+Presse,, 1 papier,grey
+Metier a tisser,, 1 soie,grey
+Autel,, 2 culture,blue
