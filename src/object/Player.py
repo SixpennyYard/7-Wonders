@@ -1,4 +1,4 @@
-from src.object.Card import Card
+from object.Card import Card
 
 
 class Player:
