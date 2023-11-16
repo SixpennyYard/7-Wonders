@@ -69,3 +69,10 @@ class Player:
                 count += 1
 
         return count
+
+    def get_yellow(self, card_name) -> bool:
+        """
+        :param card_name: Prend le nom d'une carte jaune en paramètre
+        :return: renvoie True si le joueur la possède sinon false
+        """
+        pass
