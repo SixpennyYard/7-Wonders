@@ -242,35 +242,44 @@ def print_playable_hand():
                               player2.count_silk() + player1.count_silk())
 
 
+def can_play_split(card_coast: list[str]):
+    if card_coast[1] == "piece" and int(card_coast[0]) <= active_player.money:
+        return True
+    elif card_coast[1] == "bois" and (int(card_coast[0]) <= active_player.count_wood()
+                                      or active_player.money > 2):
+        return True
+    elif card_coast[1] == "brique" and (int(card_coast[0]) <= active_player.count_brick()
+                                        or active_player.money > 2):
+        return True
+    elif card_coast[1] == "or" and (int(card_coast[0]) <= active_player.count_gold()
+                                    or active_player.money > 2):
+        return True
+    elif card_coast[1] == "verre" and int(card_coast[0]) <= (active_player.count_glass()
+                                                             or active_player.money > 2):
+        return True
+    elif card_coast[1] == "pierre" and int(card_coast[0]) <= (active_player.count_stone()
+                                                              or active_player.money > 2):
+        return True
+    elif card_coast[1] == "papier" and int(card_coast[0]) <= (active_player.count_paper()
+                                                              or active_player.money > 2):
+        return True
+    elif card_coast[1] == "soie" and int(card_coast[0]) <= (active_player.count_silk()
+                                                            or active_player.money > 2):
+        return True
+
+
 def can_play() -> bool:
     for card in active_player.hand:
         if card.coast == "" or card.coast is None:
             return True
         else:
-            card_coast = card.coast.split(" ")
-            if card_coast[1] == "piece" and int(card_coast[0]) <= active_player.money:
-                return True
-            elif card_coast[1] == "bois" and (int(card_coast[0]) <= active_player.count_wood()
-                                              or active_player.money > 2):
-                return True
-            elif card_coast[1] == "brique" and (int(card_coast[0]) <= active_player.count_brick()
-                                                or active_player.money > 2):
-                return True
-            elif card_coast[1] == "or" and (int(card_coast[0]) <= active_player.count_gold()
-                                            or active_player.money > 2):
-                return True
-            elif card_coast[1] == "verre" and int(card_coast[0]) <= (active_player.count_glass()
-                                                                     or active_player.money > 2):
-                return True
-            elif card_coast[1] == "pierre" and int(card_coast[0]) <= (active_player.count_stone()
-                                                                      or active_player.money > 2):
-                return True
-            elif card_coast[1] == "papier" and int(card_coast[0]) <= (active_player.count_paper()
-                                                                      or active_player.money > 2):
-                return True
-            elif card_coast[1] == "soie" and int(card_coast[0]) <= (active_player.count_silk()
-                                                                    or active_player.money > 2):
-                return True
+            if "&" in card.coast:
+                card_coasts: list[str] = card.coast.split(" & ")
+                for card_coast in card_coasts:
+                    can_play_split(card_coast)
+            else:
+                card_coast: list[str] = card.coast.split(" ")
+                can_play_split(card_coast)
     return False
 
 
@@ -347,99 +356,98 @@ def print_resources():
     print("Verre:", glass, "   |    Papier(s):", papers, "   |    Soie(s):", silks)
 
 
+def build_split_card(coast: str):
+    if "bois" in coast.split(" ")[1] and active_player.count_wood() == 0:
+        if active_player.get_yellow("Comptoire Est"):
+            right: Player = players[(index + 1) % 3]
+            if right.count_wood() > 0:
+                active_player.money -= 1
+        elif active_player.get_yellow("Comptoire Ouest"):
+            left: Player = players[(index - 1) % 3]
+            if left.count_wood() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "pierre" in coast.split(" ")[1] and active_player.count_stone() == 0:
+        if active_player.get_yellow("Comptoire Est"):
+            right: Player = players[(index + 1) % 3]
+            if right.count_stone() > 0:
+                active_player.money -= 1
+        elif active_player.get_yellow("Comptoire Ouest"):
+            left: Player = players[(index - 1) % 3]
+            if left.count_stone() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "brique" in coast.split(" ")[1] and active_player.count_brick() == 0:
+        if active_player.get_yellow("Comptoire Est"):
+            right: Player = players[(index + 1) % 3]
+            if right.count_brick() > 0:
+                active_player.money -= 1
+        elif active_player.get_yellow("Comptoire Ouest"):
+            left: Player = players[(index - 1) % 3]
+            if left.count_brick() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "or" in coast.split(" ")[1] and active_player.count_gold() == 0:
+        if active_player.get_yellow("Comptoire Est"):
+            right: Player = players[(index + 1) % 3]
+            if right.count_gold() > 0:
+                active_player.money -= 1
+        elif active_player.get_yellow("Comptoire Ouest"):
+            left: Player = players[(index - 1) % 3]
+            if left.count_gold() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "papier" in coast.split(" ")[1] and active_player.count_paper() == 0:
+        if active_player.get_yellow("Marche"):
+            right: Player = players[(index + 1) % 3]
+            left: Player = players[(index - 1) % 3]
+            if right.count_brick() > 0:
+                active_player.money -= 1
+            elif left.count_brick() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "verre" in coast.split(" ")[1] and active_player.count_glass() == 0:
+        if active_player.get_yellow("Marche"):
+            right: Player = players[(index + 1) % 3]
+            left: Player = players[(index - 1) % 3]
+            if right.count_brick() > 0:
+                active_player.money -= 1
+            elif left.count_brick() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+    if "soie" in coast.split(" ")[1] and active_player.count_silk() == 0:
+        if active_player.get_yellow("Marche"):
+            right: Player = players[(index + 1) % 3]
+            left: Player = players[(index - 1) % 3]
+            if right.count_brick() > 0:
+                active_player.money -= 1
+            elif left.count_brick() > 0:
+                active_player.money -= 1
+        else:
+            active_player.money -= 2
+
+
 def build_card(played):
     if played.coast != "":
-        if "bois" in played.coast.split(" ")[1] and active_player.count_wood() == 0:
-            if active_player.get_yellow("Comptoire Est"):
-                right: Player = players[(index + 1) % 3]
-                if right.count_wood() > 0:
-                    active_player.money -= 1
-            elif active_player.get_yellow("Comptoire Ouest"):
-                left: Player = players[(index - 1) % 3]
-                if left.count_wood() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "pierre" in played.coast.split(" ")[1] and active_player.count_stone() == 0:
-            if active_player.get_yellow("Comptoire Est"):
-                right: Player = players[(index + 1) % 3]
-                if right.count_stone() > 0:
-                    active_player.money -= 1
-            elif active_player.get_yellow("Comptoire Ouest"):
-                left: Player = players[(index - 1) % 3]
-                if left.count_stone() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "brique" in played.coast.split(" ")[1] and active_player.count_brick() == 0:
-            if active_player.get_yellow("Comptoire Est"):
-                right: Player = players[(index + 1) % 3]
-                if right.count_brick() > 0:
-                    active_player.money -= 1
-            elif active_player.get_yellow("Comptoire Ouest"):
-                left: Player = players[(index - 1) % 3]
-                if left.count_brick() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "or" in played.coast.split(" ")[1] and active_player.count_gold() == 0:
-            if active_player.get_yellow("Comptoire Est"):
-                right: Player = players[(index + 1) % 3]
-                if right.count_gold() > 0:
-                    active_player.money -= 1
-            elif active_player.get_yellow("Comptoire Ouest"):
-                left: Player = players[(index - 1) % 3]
-                if left.count_gold() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "papier" in played.coast.split(" ")[1] and active_player.count_paper() == 0:
-            if active_player.get_yellow("Marche"):
-                right: Player = players[(index + 1) % 3]
-                left: Player = players[(index - 1) % 3]
-                if right.count_brick() > 0:
-                    active_player.money -= 1
-                elif left.count_brick() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "verre" in played.coast.split(" ")[1] and active_player.count_glass() == 0:
-            if active_player.get_yellow("Marche"):
-                right: Player = players[(index + 1) % 3]
-                left: Player = players[(index - 1) % 3]
-                if right.count_brick() > 0:
-                    active_player.money -= 1
-                elif left.count_brick() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
-
-        if "soie" in played.coast.split(" ")[1] and active_player.count_silk() == 0:
-            if active_player.get_yellow("Marche"):
-                right: Player = players[(index + 1) % 3]
-                left: Player = players[(index - 1) % 3]
-                if right.count_brick() > 0:
-                    active_player.money -= 1
-                elif left.count_brick() > 0:
-                    active_player.money -= 1
-            else:
-                active_player.money -= 2
+        if "&" in played.coast:
+            coasts: list[str] = played.coast.split(" & ")
+            for coast in coasts:
+                build_split_card(coast)
+        else:
+            build_split_card(played.coast)
     active_player.playable_hand.clear()
-
-
-def action_handler(action="jouer"):
-    action = input(f"Donnez le numéro de la carde que vous voulez {action} OU écrivez 'retour' pour revenir en "
-                   "arrière : ")
-
-    while action != "retour" and (
-            not action.isdigit() or int(action) < 1 or int(action) > len(active_player.playable_hand)):
-        action = input("Veuillez entrer 'retour' ou le numéro d'une de vos carte (numéro de 1 à "
-                       + str(len(active_player.playable_hand)) + ") : ")
 
 
 def print_player_card(player):
@@ -464,7 +472,7 @@ def can_construct_wonder() -> bool:
     return False
 
 
-def age_1_loop():
+def age_loop():
     clear_console()
     print("TOUR DE _-=", active_player.name, "=-_")
     print_player_card(active_player)
@@ -483,11 +491,17 @@ def age_1_loop():
     if action == "1":
         clear_console()
         print_hand()
-        action_handler("défausser")
+        action = input(f"Donnez le numéro de la carde que vous voulez défauser OU écrivez 'retour' pour revenir en "
+                       "arrière : ")
+        while action != "retour" and (
+                not action.isdigit() or int(action) < 1 or int(action) > len(active_player.hand)):
+            action = input("Veuillez entrer 'retour' ou le numéro d'une de vos carte (numéro de 1 à "
+                           + str(len(active_player.hand)) + ") : ")
 
         if action.isdigit():
             del active_player.hand[int(action) - 1]
             active_player.money += 2 + len(active_player.yellow)
+            set_next_active()
         else:
             return
     elif action == "2":
@@ -500,7 +514,13 @@ def age_1_loop():
         else:
             clear_console()
             print_playable_hand()
-            action_handler()
+
+            action = input(f"Donnez le numéro de la carde que vous voulez jouer OU écrivez 'retour' pour revenir en "
+                           "arrière : ")
+            while action != "retour" and (
+                    not action.isdigit() or int(action) < 1 or int(action) > len(active_player.playable_hand)):
+                action = input("Veuillez entrer 'retour' ou le numéro d'une de vos carte (numéro de 1 à "
+                               + str(len(active_player.playable_hand)) + ") : ")
             if action == "retour":
                 return
             else:
@@ -533,11 +553,63 @@ def age_1_loop():
                 if played.coast != "" and played.coast.split(" ")[1] == "piece":
                     build_card(played)
                     active_player.money -= int(played.coast.split(" ")[0])
+                set_next_active()
     else:
         if not can_construct_wonder():
             return
-    set_next_active()
 
 
 while len(player3.hand) > 1:
-    age_1_loop()
+    age_loop()
+
+clear_console()
+print("L'Age 2 va commencer dans quelques instant..")
+time.sleep(2)
+
+# initialisation des jeux
+# TODO: Faire les enchainages...
+with open('resources/deuxieme_age.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
+    next(reader)
+
+    for row in reader:
+        if len(row) < 5:
+            cards.append(Card(row[0], row[1], row[2], row[3]))
+        else:
+            cards.append(Card(row[0], row[1], row[2], row[3], row[4]))
+
+random.shuffle(cards)
+player1.hand.extend(cards[:7])
+cards = cards[7:]
+player2.hand.extend(cards[:7])
+cards = cards[7:]
+player3.hand.extend(cards[:7])
+cards = cards[7:]
+
+while len(player3.hand) > 1:
+    age_loop()
+
+clear_console()
+print("L'Age 3 va commencer dans quelques instant..")
+time.sleep(2)
+
+# initialisation des jeux
+with open('resources/troisieme_age.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
+    next(reader)
+
+    for row in reader:
+        cards.append(Card(row[0], row[1], row[2], row[3]))
+
+random.shuffle(cards)
+player1.hand.extend(cards[:7])
+cards = cards[7:]
+player2.hand.extend(cards[:7])
+cards = cards[7:]
+player3.hand.extend(cards[:7])
+cards = cards[7:]
+
+while len(player3.hand) > 1:
+    age_loop()
+
+# TODO: Compter les points
