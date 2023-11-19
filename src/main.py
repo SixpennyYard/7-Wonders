@@ -460,6 +460,10 @@ def print_player_card(player):
     pass
 
 
+def can_construct_wonder() -> bool:
+    return False
+
+
 def age_1_loop():
     clear_console()
     print("TOUR DE _-=", active_player.name, "=-_")
@@ -470,10 +474,11 @@ def age_1_loop():
 
     print("\n1: Défausser")
     print("2: Jouer")
+    print("3: Construire une merveille")
     action: str = input("Que voulez vous faire ? ")
 
-    while action != "1" and action != "2":
-        action = input("Veuillez choisir 1 pour Défausser ou 2 pour Jouer : ")
+    while action != "1" and action != "2" and action != "3":
+        action = input("Veuillez choisir 1 pour Défausser ou 2 pour Jouer ou 3 pour construire une merveille : ")
 
     if action == "1":
         clear_console()
@@ -485,7 +490,7 @@ def age_1_loop():
             active_player.money += 2 + len(active_player.yellow)
         else:
             return
-    else:
+    elif action == "2":
         # jouer une carte
         if not can_play():
             clear_console()
@@ -528,7 +533,9 @@ def age_1_loop():
                 if played.coast != "" and played.coast.split(" ")[1] == "piece":
                     build_card(played)
                     active_player.money -= int(played.coast.split(" ")[0])
-
+    else:
+        if not can_construct_wonder():
+            return
     set_next_active()
 
 
