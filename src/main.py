@@ -2,8 +2,6 @@ import csv
 import os
 import sys
 import time
-
-import colorama
 import random
 
 from object.Card import Card
@@ -18,14 +16,14 @@ def clear_console():
 
 
 # initialisation des imports et variable
-colorama.init()
 cards: list[Card] = []
 active_player: Player
 playing: bool = True
 print("Lancement du jeu ..")
 
 # initialisation des cartes:
-with open('resources/premier_age.csv', newline='') as csvfile:
+# CHEAT CODE pour en NSI "C:\\Users\\bouyssou\PycharmProjects\\7-Wonders\\resources\premier_age.csv"
+with open("resources\premier_age.csv", newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     next(reader)
 
@@ -358,11 +356,11 @@ def print_resources():
 
 def build_split_card(coast: str):
     if "bois" in coast.split(" ")[1] and active_player.count_wood() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.get_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_wood() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.get_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_wood() > 0:
                 active_player.money -= 1
@@ -370,11 +368,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "pierre" in coast.split(" ")[1] and active_player.count_stone() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.get_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_stone() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.get_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_stone() > 0:
                 active_player.money -= 1
@@ -382,11 +380,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "brique" in coast.split(" ")[1] and active_player.count_brick() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.get_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_brick() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.get_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_brick() > 0:
                 active_player.money -= 1
@@ -394,11 +392,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "or" in coast.split(" ")[1] and active_player.count_gold() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.get_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_gold() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.get_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_gold() > 0:
                 active_player.money -= 1
@@ -406,7 +404,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "papier" in coast.split(" ")[1] and active_player.count_paper() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.get_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -417,7 +415,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "verre" in coast.split(" ")[1] and active_player.count_glass() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.get_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -428,7 +426,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "soie" in coast.split(" ")[1] and active_player.count_silk() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.get_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -456,15 +454,6 @@ def print_player_card(player):
 
     Affiche les cartes, par couleur, du joueur
     """
-    # TODO: player a des variable pour chaque couleur (souvant la premiere lettre de la couleur de la carte)
-    #  dans cette liste (de la couleur que tu choisis) il y a des 'Card' Chaqune d'elle on un 'name' que
-    #  tu peux recupérer ``{la carte}.name``. Donc pour chaque carte de chaque variable de couleur tu afficheras :
-    #  le nom de la couleur de la carte suivit de son nom ``{la carte}.name``
-    #  EXEMPLE:
-    #  _-= Rouge =-_
-    #  Nom de la carte 1 que possède le joueur
-    #  Nom de la carte 2 que possède le joueur
-    #  ATTENTION: Si le joueur n'a pas de carte rouge ne l'affiche pas !
     print("_-= Jaune =-_")
     player.print_yellow()
     print("_-= Marron =-_")
