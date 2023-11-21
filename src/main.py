@@ -1,9 +1,8 @@
 import csv
 import os
 import sys
-import time
+import time  # le prof nous l'a montré en cours donc on peu l'utiliser
 
-import colorama
 import random
 
 from object.Card import Card
@@ -18,15 +17,14 @@ def clear_console():
 
 
 # initialisation des imports et variable
-colorama.init()
 cards: list[Card] = []
 active_player: Player
 playing: bool = True
 print("Lancement du jeu ..")
 
 # initialisation des cartes:
-with open('resources/premier_age.csv', newline='') as csvfile:
-    reader = csv.reader(csvfile, delimiter=',')
+with open('resources/premier_age.csv', newline='') as csv_file:
+    reader = csv.reader(csv_file, delimiter=',')
     next(reader)
 
     for row in reader:
@@ -299,7 +297,7 @@ def print_resources():
     glass: str = "Rien"
     papers: str = "Rien"
     silks: str = "Rien"
-    for resource in active_player.yellow:
+    for resource in active_player._yellow:
         if resource.name == "Comptoir Ouest":
             if active_player == player1:
                 woods = str(player2.count_wood()) + " contre " + str(player2.count_wood()) + " pièces."
@@ -450,10 +448,8 @@ def build_card(played):
     active_player.playable_hand.clear()
 
 
-def print_player_card(player):
+def print_player_card(player: Player):
     """
-    :param player: Joueur actif sur ce tour
-
     Affiche les cartes, par couleur, du joueur
     """
     # TODO: player a des variable pour chaque couleur (souvant la premiere lettre de la couleur de la carte)
@@ -500,7 +496,7 @@ def age_loop():
 
         if action.isdigit():
             del active_player.hand[int(action) - 1]
-            active_player.money += 2 + len(active_player.yellow)
+            active_player.money += 2 + len(active_player._yellow)
             set_next_active()
         else:
             return
@@ -528,27 +524,27 @@ def age_loop():
                 active_player.hand.remove(played)
                 if played.color == "r":
                     build_card(played)
-                    active_player.red.append(played)
+                    active_player._red.append(played)
 
                 elif played.color == "b":
                     build_card(played)
-                    active_player.brown.append(played)
+                    active_player._brown.append(played)
 
                 elif played.color == "y":
                     build_card(played)
-                    active_player.yellow.append(played)
+                    active_player._yellow.append(played)
 
                 elif played.color == "blue":
                     build_card(played)
-                    active_player.blue.append(played)
+                    active_player._blue.append(played)
 
                 elif played.color == "g":
                     build_card(played)
-                    active_player.green.append(played)
+                    active_player._green.append(played)
 
                 elif played.color == "grey":
                     build_card(played)
-                    active_player.grey.append(played)
+                    active_player._grey.append(played)
 
                 if played.coast != "" and played.coast.split(" ")[1] == "piece":
                     build_card(played)
