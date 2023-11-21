@@ -1,8 +1,9 @@
 import csv
 import os
 import sys
-import time  # le prof nous l'a montré en cours donc on peu l'utiliser
+import time
 
+import colorama
 import random
 
 from object.Card import Card
@@ -17,14 +18,15 @@ def clear_console():
 
 
 # initialisation des imports et variable
+colorama.init()
 cards: list[Card] = []
 active_player: Player
 playing: bool = True
 print("Lancement du jeu ..")
 
 # initialisation des cartes:
-with open('resources/premier_age.csv', newline='') as csv_file:
-    reader = csv.reader(csv_file, delimiter=',')
+with open('resources/premier_age.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
     next(reader)
 
     for row in reader:
@@ -297,7 +299,7 @@ def print_resources():
     glass: str = "Rien"
     papers: str = "Rien"
     silks: str = "Rien"
-    for resource in active_player._yellow:
+    for resource in active_player.yellow:
         if resource.name == "Comptoir Ouest":
             if active_player == player1:
                 woods = str(player2.count_wood()) + " contre " + str(player2.count_wood()) + " pièces."
@@ -448,8 +450,10 @@ def build_card(played):
     active_player.playable_hand.clear()
 
 
-def print_player_card(player: Player):
+def print_player_card(player):
     """
+    :param player: Joueur actif sur ce tour
+
     Affiche les cartes, par couleur, du joueur
     """
     # TODO: player a des variable pour chaque couleur (souvant la premiere lettre de la couleur de la carte)
@@ -461,7 +465,18 @@ def print_player_card(player: Player):
     #  Nom de la carte 1 que possède le joueur
     #  Nom de la carte 2 que possède le joueur
     #  ATTENTION: Si le joueur n'a pas de carte rouge ne l'affiche pas !
-    pass
+    print("_-= Jaune =-_")
+    player.print_yellow()
+    print("_-= Marron =-_")
+    player.print_brown()
+    print("_-= Gris =-_")
+    player.print_grey()
+    print("_-= Vert =-_")
+    player.print_green()
+    print("_-= Rouge =-_")
+    player.print_red()
+    print("_-= Bleu =-_")
+    player.print_blue()
 
 
 def can_construct_wonder() -> bool:
@@ -496,7 +511,7 @@ def age_loop():
 
         if action.isdigit():
             del active_player.hand[int(action) - 1]
-            active_player.money += 2 + len(active_player._yellow)
+            active_player.money += 2 + len(active_player.yellow)
             set_next_active()
         else:
             return
@@ -524,27 +539,27 @@ def age_loop():
                 active_player.hand.remove(played)
                 if played.color == "r":
                     build_card(played)
-                    active_player._red.append(played)
+                    active_player.red.append(played)
 
                 elif played.color == "b":
                     build_card(played)
-                    active_player._brown.append(played)
+                    active_player.brown.append(played)
 
                 elif played.color == "y":
                     build_card(played)
-                    active_player._yellow.append(played)
+                    active_player.yellow.append(played)
 
                 elif played.color == "blue":
                     build_card(played)
-                    active_player._blue.append(played)
+                    active_player.blue.append(played)
 
                 elif played.color == "g":
                     build_card(played)
-                    active_player._green.append(played)
+                    active_player.green.append(played)
 
                 elif played.color == "grey":
                     build_card(played)
-                    active_player._grey.append(played)
+                    active_player.grey.append(played)
 
                 if played.coast != "" and played.coast.split(" ")[1] == "piece":
                     build_card(played)
