@@ -573,6 +573,57 @@ def age_loop():
 while len(player3.hand) > 1:
     age_loop()
 
+
+def count_war_point(adding_war: int):
+    player1_war_point: int = 0
+    for red_card in player1.red:
+        player1_war_point += int(red_card.offer[0])
+
+    player2_war_point: int = 0
+    for red_card in player2.red:
+        player2_war_point += int(red_card.offer[0])
+
+    player3_war_point: int = 0
+    for red_card in player3.red:
+        player3_war_point += int(red_card.offer[0])
+
+    if player1_war_point > player2_war_point:
+        player1.war_point += adding_war
+        player2.war_point -= 1
+    else:
+        player1.war_point -= 1
+        player2.war_point += adding_war
+
+    if player1_war_point > player3_war_point:
+        player1.war_point += adding_war
+        player3.war_point -= 1
+    else:
+        player1.war_point -= 1
+        player3.war_point += adding_war
+
+    if player3_war_point > player2_war_point:
+        player3.war_point += adding_war
+        player2.war_point -= 1
+    else:
+        player3.war_point -= 1
+        player2.war_point += adding_war
+
+
+def count_yellow_point():
+    point: int = 0
+    for yellow_card in player1.yellow:
+        if "culture" in yellow_card.offer:
+            if not "&" in yellow_card.offer:
+                if not "/" in yellow_card.offer:
+                    point += int(yellow_card.offer[0])
+                else:
+                    pass  # split " & "
+        else:
+            pass  # split " & "
+
+
+count_war_point(1)
+
 clear_console()
 print("L'Age 2 va commencer dans quelques instant..")
 time.sleep(2)
@@ -600,6 +651,8 @@ cards = cards[7:]
 while len(player3.hand) > 1:
     age_loop()
 
+count_war_point(3)
+
 clear_console()
 print("L'Age 3 va commencer dans quelques instant..")
 time.sleep(2)
@@ -622,6 +675,8 @@ cards = cards[7:]
 
 while len(player3.hand) > 1:
     age_loop()
+
+count_war_point(5)
 
 # TODO: Compter les points
 def final_score_blue(player: Player):
