@@ -1,6 +1,5 @@
 from object.Card import Card
 
-
 class Player:
     def __init__(self, name: str, money: int = 3):
         self.playable_hand: list[Card] = []
@@ -10,10 +9,12 @@ class Player:
         self.green: list[Card] = []
         self.red: list[Card] = []
         self.blue: list[Card] = []
+        self.purple: list[Card] = []
         self.name = name
         self.money = money
         self.hand: list[Card] = []
         self.war_point: int = 0
+        self.yellow_point: int = 0
 
     def count_wood(self) -> int:
         count: int = 0

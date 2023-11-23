@@ -16,7 +16,7 @@ Vignoble, ,marron partout, y
 Muraille, 3 pierre, 2 guerre, r
 Ecuries, 1 or & 1 brique & 1 bois, 2 guerre, r
 Champs de tir, 1 or & 2 bois, 2 guerre, r
-Laboratoire, 2 brique & 1 papier, 1 verre - Engrenage, g,
-Bibliotheque, 2 pierre & 1 soie, 1 verre - Tablette, g
-Ecole, 1 bois & 1 papier, 1 verre - Tablette, g
-Dispensaire, 2 or & 1 verre, 1 verre - Compas, g
+Laboratoire, 2 brique & 1 papier,Engrenage, g,
+Bibliotheque, 2 pierre & 1 soie,Tablette, g
+Ecole, 1 bois & 1 papier,Tablette, g
+Dispensaire, 2 or & 1 verre,Compas, g
