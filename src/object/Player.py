@@ -13,6 +13,7 @@ class Player:
         self.name = name
         self.money = money
         self.hand: list[Card] = []
+        self.war_point: int = 0
 
     def count_wood(self) -> int:
         count: int = 0
