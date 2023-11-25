@@ -5,7 +5,7 @@ class Card:
         :param coast: Coût de la carte
         :param offer: Ce que la carte offre
         :param color: Couleur de la carte
-        :param free_offer: Les possibles enchaînage de la carte pour la construire
+        :param free_offer: Les possibles chaînage de la carte pour la construire
         """
         self.name = name
         self.coast = coast

@@ -3,7 +3,6 @@ import os
 import sys
 import time
 
-import colorama
 import random
 
 from object.Card import Card
@@ -18,7 +17,7 @@ def clear_console():
 
 
 # initialisation des imports et variable
-colorama.init()
+age: int = 1
 cards: list[Card] = []
 active_player: Player
 playing: bool = True
@@ -97,36 +96,39 @@ def set_next_active():
         active_player = player1
 
 
-def print_playable_hand():
-    for card in active_player.hand:
+def playable_hand(player: Player):
+    for card in player.hand:
         if card.coast == "" or card.coast is None:
-            active_player.playable_hand.append(card)
+            player.playable_hand.append(card)
         else:
             card_coast = card.coast.split(" ")
-            if card_coast[1] == "piece" and int(card_coast[0]) <= active_player.money:
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "bois" and int(card_coast[0]) <= (active_player.count_wood()
-                                                                    or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "brique" and int(card_coast[0]) <= (active_player.count_brick()
-                                                                      or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "or" and int(card_coast[0]) <= (active_player.count_gold()
-                                                                  or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "verre" and int(card_coast[0]) <= (active_player.count_glass()
-                                                                     or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "pierre" and int(card_coast[0]) <= (active_player.count_stone()
-                                                                      or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "papier" and int(card_coast[0]) <= (active_player.count_paper()
-                                                                      or active_player.money > 2):
-                active_player.playable_hand.append(card)
-            elif card_coast[1] == "soie" and int(card_coast[0]) <= (active_player.count_silk()
-                                                                    or active_player.money > 2):
-                active_player.playable_hand.append(card)
+            if card_coast[1] == "piece" and int(card_coast[0]) <= player.money:
+                player.playable_hand.append(card)
+            elif card_coast[1] == "bois" and int(card_coast[0]) <= (player.count_wood()
+                                                                    or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "brique" and int(card_coast[0]) <= (player.count_brick()
+                                                                      or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "or" and int(card_coast[0]) <= (player.count_gold()
+                                                                  or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "verre" and int(card_coast[0]) <= (player.count_glass()
+                                                                     or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "pierre" and int(card_coast[0]) <= (player.count_stone()
+                                                                      or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "papier" and int(card_coast[0]) <= (player.count_paper()
+                                                                      or player.money > 2):
+                player.playable_hand.append(card)
+            elif card_coast[1] == "soie" and int(card_coast[0]) <= (player.count_silk()
+                                                                    or player.money > 2):
+                player.playable_hand.append(card)
 
+
+def print_playable_hand():
+    playable_hand(active_player)
     print("Voici ce que vous pouvez jouer:")
     for i in range(len(active_player.playable_hand)):
         if active_player.playable_hand[i].color != "y":
@@ -137,7 +139,6 @@ def print_playable_hand():
                 print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût] Aucun | [Offre]",
                       active_player.playable_hand[i].offer)
         else:
-            # TODO: Ajouter les cartes jaunes des autres ages dans la condition.
             if active_player.playable_hand[i].name == "Comptoir Ouest":
                 if active_player == player1:
                     if active_player.playable_hand[i].coast != "":
@@ -242,44 +243,44 @@ def print_playable_hand():
                               player2.count_silk() + player1.count_silk())
 
 
-def can_play_split(card_coast: list[str]):
-    if card_coast[1] == "piece" and int(card_coast[0]) <= active_player.money:
+def can_play_split(card_coast: list[str], player):
+    if card_coast[1] == "piece" and int(card_coast[0]) <= player.money:
         return True
-    elif card_coast[1] == "bois" and (int(card_coast[0]) <= active_player.count_wood()
-                                      or active_player.money > 2):
+    elif card_coast[1] == "bois" and (int(card_coast[0]) <= player.count_wood()
+                                      or player.money > 2):
         return True
-    elif card_coast[1] == "brique" and (int(card_coast[0]) <= active_player.count_brick()
-                                        or active_player.money > 2):
+    elif card_coast[1] == "brique" and (int(card_coast[0]) <= player.count_brick()
+                                        or player.money > 2):
         return True
-    elif card_coast[1] == "or" and (int(card_coast[0]) <= active_player.count_gold()
-                                    or active_player.money > 2):
+    elif card_coast[1] == "or" and (int(card_coast[0]) <= player.count_gold()
+                                    or player.money > 2):
         return True
-    elif card_coast[1] == "verre" and int(card_coast[0]) <= (active_player.count_glass()
-                                                             or active_player.money > 2):
+    elif card_coast[1] == "verre" and int(card_coast[0]) <= (player.count_glass()
+                                                             or player.money > 2):
         return True
-    elif card_coast[1] == "pierre" and int(card_coast[0]) <= (active_player.count_stone()
-                                                              or active_player.money > 2):
+    elif card_coast[1] == "pierre" and int(card_coast[0]) <= (player.count_stone()
+                                                              or player.money > 2):
         return True
-    elif card_coast[1] == "papier" and int(card_coast[0]) <= (active_player.count_paper()
-                                                              or active_player.money > 2):
+    elif card_coast[1] == "papier" and int(card_coast[0]) <= (player.count_paper()
+                                                              or player.money > 2):
         return True
-    elif card_coast[1] == "soie" and int(card_coast[0]) <= (active_player.count_silk()
-                                                            or active_player.money > 2):
+    elif card_coast[1] == "soie" and int(card_coast[0]) <= (player.count_silk()
+                                                            or player.money > 2):
         return True
 
 
-def can_play() -> bool:
-    for card in active_player.hand:
+def can_play(player) -> bool:
+    for card in player.hand:
         if card.coast == "" or card.coast is None:
             return True
         else:
             if "&" in card.coast:
                 card_coasts: list[str] = card.coast.split(" & ")
                 for card_coast in card_coasts:
-                    can_play_split(card_coast)
+                    can_play_split(card_coast, player)
             else:
                 card_coast: list[str] = card.coast.split(" ")
-                can_play_split(card_coast)
+                can_play_split(card_coast, player)
     return False
 
 
@@ -358,11 +359,11 @@ def print_resources():
 
 def build_split_card(coast: str):
     if "bois" in coast.split(" ")[1] and active_player.count_wood() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_wood() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.has_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_wood() > 0:
                 active_player.money -= 1
@@ -370,11 +371,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "pierre" in coast.split(" ")[1] and active_player.count_stone() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_stone() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.has_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_stone() > 0:
                 active_player.money -= 1
@@ -382,11 +383,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "brique" in coast.split(" ")[1] and active_player.count_brick() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_brick() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.has_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_brick() > 0:
                 active_player.money -= 1
@@ -394,11 +395,11 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "or" in coast.split(" ")[1] and active_player.count_gold() == 0:
-        if active_player.get_yellow("Comptoire Est"):
+        if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_gold() > 0:
                 active_player.money -= 1
-        elif active_player.get_yellow("Comptoire Ouest"):
+        elif active_player.has_yellow_card("Comptoire Ouest"):
             left: Player = players[(index - 1) % 3]
             if left.count_gold() > 0:
                 active_player.money -= 1
@@ -406,7 +407,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "papier" in coast.split(" ")[1] and active_player.count_paper() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -417,7 +418,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "verre" in coast.split(" ")[1] and active_player.count_glass() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -428,7 +429,7 @@ def build_split_card(coast: str):
             active_player.money -= 2
 
     if "soie" in coast.split(" ")[1] and active_player.count_silk() == 0:
-        if active_player.get_yellow("Marche"):
+        if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
             if right.count_brick() > 0:
@@ -456,15 +457,6 @@ def print_player_card(player):
 
     Affiche les cartes, par couleur, du joueur
     """
-    # TODO: player a des variable pour chaque couleur (souvant la premiere lettre de la couleur de la carte)
-    #  dans cette liste (de la couleur que tu choisis) il y a des 'Card' Chaqune d'elle on un 'name' que
-    #  tu peux recupérer ``{la carte}.name``. Donc pour chaque carte de chaque variable de couleur tu afficheras :
-    #  le nom de la couleur de la carte suivit de son nom ``{la carte}.name``
-    #  EXEMPLE:
-    #  _-= Rouge =-_
-    #  Nom de la carte 1 que possède le joueur
-    #  Nom de la carte 2 que possède le joueur
-    #  ATTENTION: Si le joueur n'a pas de carte rouge ne l'affiche pas !
     print("_-= Jaune =-_")
     player.print_yellow()
     print("_-= Marron =-_")
@@ -517,7 +509,7 @@ def age_loop():
             return
     elif action == "2":
         # jouer une carte
-        if not can_play():
+        if not can_play(active_player):
             clear_console()
             print("Vous ne pouvez pas jouer...")
             time.sleep(2)
@@ -609,23 +601,11 @@ def count_war_point(adding_war: int):
         player2.war_point += adding_war
 
 
-def count_yellow_point():
-    point: int = 0
-    for yellow_card in player1.yellow:
-        if "culture" in yellow_card.offer:
-            if not "&" in yellow_card.offer:
-                if not "/" in yellow_card.offer:
-                    point += int(yellow_card.offer[0])
-                else:
-                    pass  # split " & "
-        else:
-            pass  # split " & "
-
-
 count_war_point(1)
 
 clear_console()
 print("L'Age 2 va commencer dans quelques instant..")
+age += 1
 time.sleep(2)
 
 # initialisation des jeux
@@ -655,6 +635,7 @@ count_war_point(3)
 
 clear_console()
 print("L'Age 3 va commencer dans quelques instant..")
+age += 1
 time.sleep(2)
 
 # initialisation des jeux
@@ -678,33 +659,45 @@ while len(player3.hand) > 1:
 
 count_war_point(5)
 
-# TODO: Compter les points
+
+# TODO: Compter les points des carte guilde et de la science !
 def final_score_blue(player: Player):
-    carte: Card
     score_blue = 0
-    for carte in player.blue:
-        score_blue += int(carte.offer[0])
-        return score_blue
+    for card in player.blue:
+        score_blue += int(card.offer[0])
+    return score_blue
+
 
 def final_score_red(player: Player):
-    carte: Card
-    score_red = 0
-    for carte in player.red:
-        score_red += int(carte.offer[0])
-    return score_red
+    return player.war_point
+
 
 def final_score_yellow(player: Player):
-    return player.yellow_point
+    point: int = 0
+    named_yellow: list[list[str, str]] = [["Port", "marron"], ["Phare", "marron"],
+                                          ["Chambre de Commerce", "marron"], ["Arene", "marron"]]
+    for card in named_yellow:
+        if player.has_yellow_card(card[0]):
+            if card[1] == "marron":
+                point += len(player.brown)
+            elif card[1] == "yellow":
+                point += len(player.yellow)
+            elif card[1] == "girs":
+                point += len(player.grey) * 2
+            else:
+                point += 0  # TODO: 1 * le nombre d'etage de merveille construite.
+    return point
+
 
 def final_score_money(player: Player):
-    return player.money
+    return player.money // 3
+
 
 def final_score_green(player: Player):
-    carte: Card
     green_symbole: list[str] = []
     green_score = 0
-    for carte in player.green:
-        green_symbole.append(carte.offer)
+    for card in player.green:
+        green_symbole.append(card.offer)
     nb_engrenage = green_symbole.count("Engrenage")
     nb_tablette = green_symbole.count("Tablette")
     nb_compas = green_symbole.count("Compas")
@@ -724,5 +717,21 @@ def final_score_green(player: Player):
         green_score += 9
     elif nb_tablette == 4:
         green_score += 16
+    if nb_compas == 1:
+        green_score += 1
+    elif nb_compas == 2:
+        green_score += 4
+    elif nb_compas == 3:
+        green_score += 9
+    elif nb_compas == 4:
+        green_score += 16
+    return green_score
 
 
+def final_score(player: Player):
+    return (final_score_yellow(player) + final_score_blue(player) + final_score_green(player)
+            + final_score_money(player) + final_score_red(player))
+
+
+def age():
+    return age
