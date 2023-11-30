@@ -19,6 +19,7 @@ def clear_console():
 # initialisation des imports et variable
 age: int = 1
 cards: list[Card] = []
+discard: list[Card] = []
 active_player: Player
 playing: bool = True
 print("Lancement du jeu ..")
@@ -502,6 +503,7 @@ def age_loop():
                            + str(len(active_player.hand)) + ") : ")
 
         if action.isdigit():
+            discard.append(active_player.hand[int(action) - 1])
             del active_player.hand[int(action) - 1]
             active_player.money += 2 + len(active_player.yellow)
             set_next_active()
@@ -602,6 +604,7 @@ def count_war_point(adding_war: int):
 
 
 count_war_point(1)
+discard.clear()
 
 clear_console()
 print("L'Age 2 va commencer dans quelques instant..")
@@ -632,6 +635,7 @@ while len(player3.hand) > 1:
     age_loop()
 
 count_war_point(3)
+discard.clear()
 
 clear_console()
 print("L'Age 3 va commencer dans quelques instant..")
@@ -658,6 +662,7 @@ while len(player3.hand) > 1:
     age_loop()
 
 count_war_point(5)
+discard.clear()
 
 
 # TODO: Compter les points des carte guilde et de la science !
