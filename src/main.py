@@ -730,7 +730,59 @@ def final_score_green(player: Player):
         green_score += 9
     elif nb_compas == 4:
         green_score += 16
+    if
     return green_score
+    # recherche:
+    # nb_engrenage = 3
+    # nb_tablette = 2
+    # nb_compas = 1
+    # vert_score = 14
+    #
+    # if nb_engrenage > nb_tablette> nb_compas:
+    #     a = nb_engrenage
+    #     b = nb_tablette
+    #     if nb_compas > 1:
+    #         c = nb_compas
+    #     else: c = 0
+    # elif nb_engrenage < nb_tablette < nb_compas:
+    #     a = nb_compas
+    #     b = nb_tablette
+    #     if nb_engrenage > 1:
+    #         c = nb_engrenage
+    #     else: c = 0
+    # elif nb_tablette > nb_compas > nb_engrenage:
+    #     a = nb_tablette
+    #     b = nb_compas
+    #     if nb_engrenage > 1:
+    #         c = nb_engrenage
+    #     else: c = 0
+    # elif nb_tablette > nb_engrenage > nb_compas:
+    #     a = nb_tablette
+    #     b = nb_engrenage
+    #     if nb_compas > 1:
+    #         c = nb_compas
+    #     else: c = 0
+    # elif nb_compas > nb_engrenage > nb_tablette:
+    #     a = nb_compas
+    #     b = nb_engrenage
+    #     if nb_tablette > 1:
+    #         c = nb_tablette
+    #     else: c = 0
+    # elif nb_engrenage > nb_tablette > nb_compas:
+    #     a = nb_engrenage
+    #     b = nb_tablette
+    #     if nb_compas > 1:
+    #         c = nb_compas
+    #     else: c = 0
+    # nb_moins = a - b - c
+    # score  = a - nb_moins
+    # if nb_moins == 0:
+    #     score_end = 7
+    # else:
+    #     score_end = score *7
+    # score_end = score *7
+    # print(score_end, vert_score, score_end+vert_score)
+
 
 
 def final_score(player: Player):
