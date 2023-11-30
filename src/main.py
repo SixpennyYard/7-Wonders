@@ -706,6 +706,9 @@ def final_score_green(player: Player):
     nb_engrenage = green_symbole.count("Engrenage")
     nb_tablette = green_symbole.count("Tablette")
     nb_compas = green_symbole.count("Compas")
+    t_engrenage = []
+    t_tablette = []
+    t_compas = []
     if nb_engrenage == 1:
         green_score += 1
     elif nb_engrenage == 2:
@@ -730,6 +733,18 @@ def final_score_green(player: Player):
         green_score += 9
     elif nb_compas == 4:
         green_score += 16
+    for i in range(nb_engrenage):
+        t_engrenage.append(1)
+    for i in range(nb_tablette):
+        t_tablette.append(1)
+    for i in range(nb_compas):
+        t_compas.append(1)
+
+    while len(t_engrenage) > 0 and len(t_tablette) > 0 and len(t_compas) > 0:
+        t_engrenage.remove(1)
+        t_tablette.remove(1)
+        t_compas.remove(1)
+        green_score += 7
     return green_score
 
 
