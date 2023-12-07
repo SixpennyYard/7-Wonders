@@ -96,15 +96,15 @@ class Player:
 
     def evaluate_ressources(self) -> int:
         evaluation: int = 0
-        ressources: tuple = (
+        resources: tuple = (
             self.count_silk(), self.count_gold(), self.count_brick(), self.count_wood(), self.count_stone(),
             self.count_glass(), self.count_paper()
         )
-        for ressource in ressources:
-            if ressource >= 3:
+        for resource in resources:
+            if resource >= 3:
                 evaluation -= 2
             else:
-                evaluation += ressource
+                evaluation += resource
         return evaluation
 
     def has_yellow_card(self, card_name: str) -> bool:
