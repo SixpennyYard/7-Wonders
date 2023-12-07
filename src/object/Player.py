@@ -2,7 +2,7 @@ from object.Card import Card
 
 
 class Player:
-    def __init__(self, name: str, money: int = 3):
+    def __init__(self, name: str, merveille, money: int = 3):
         self.playable_hand: list[Card] = []
         self.yellow: list[Card] = []
         self.brown: list[Card] = []
@@ -16,6 +16,8 @@ class Player:
         self.hand: list[Card] = []
         self.war_point: int = 0
         self.yellow_point: int = 0
+        self.merveille = merveille
+        self.palier = 1
 
     def count_wood(self) -> int:
         count: int = 0
@@ -25,6 +27,8 @@ class Player:
         for resource in self.yellow:
             if "bois" in resource.offer:
                 count += 1
+        if merveille[1] == "bois":
+            count += 1
 
         return count
 
@@ -36,6 +40,8 @@ class Player:
         for resource in self.yellow:
             if "brique" in resource.offer:
                 count += 1
+        if merveille[1] == "brique":
+            count += 1
 
         return count
 
@@ -47,6 +53,8 @@ class Player:
         for resource in self.yellow:
             if "or" in resource.offer:
                 count += 1
+        if merveille[1] == "or":
+            count += 1
 
         return count
 
@@ -58,6 +66,8 @@ class Player:
         for resource in self.yellow:
             if "pierre" in resource.offer:
                 count += 1
+        if merveille[1] == "pierre":
+            count += 1
 
         return count
 
@@ -69,6 +79,8 @@ class Player:
         for resource in self.yellow:
             if "verre" in resource.offer:
                 count += 1
+        if merveille[1] == "verre":
+            count += 1
 
         return count
 
@@ -80,6 +92,8 @@ class Player:
         for resource in self.yellow:
             if "papier" in resource.offer:
                 count += 1
+        if merveille[1] == "papier":
+            count += 1
 
         return count
 
@@ -91,6 +105,8 @@ class Player:
         for resource in self.yellow:
             if "soie" in resource.offer:
                 count += 1
+        if merveille[1] == "soie":
+            count += 1
 
         return count
 

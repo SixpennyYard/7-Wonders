@@ -23,8 +23,17 @@ discard: list[Card] = []
 active_player: Player
 playing: bool = True
 print("Lancement du jeu ..")
+merveille = []
 
 # initialisation des cartes:
+with open('resources/merveille.csv', newline='') as csvfile:
+    reader = csv.reader(csvfile, delimiter=',')
+    next(reader)
+
+    for row in reader:
+        merveille.append([row[0], row[1], row[2], row[3]])
+
+
 with open('resources/premier_age.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     next(reader)
@@ -36,14 +45,14 @@ clear_console()
 print("Lancement du Jeu ...")
 
 # initialisation des joueurs
-player1: Player = Player(input("Quel est le nom du premier joueur ? "))
+player1: Player = Player(input("Quel est le nom du premier joueur ? "), random.choice(merveille))
 active_player = player1
 
 name = input("Quel est le nom du deuxième joueur ? ")
 if name == player1.name:
     name += " (2)"
     print("Votre nom est déjà attribuer.. \nNouveau nom:", name, "!")
-player2: Player = Player(name)
+player2: Player = Player(name, random.choice(merveille))
 
 name2 = input("Quel est le nom du troisième joueur ? ")
 if name2 == player1.name and name2 + " (2)" == player2.name:
@@ -52,7 +61,7 @@ if name2 == player1.name and name2 + " (2)" == player2.name:
 elif name2 == player1.name or name2 == player2.name:
     name2 += " (2)"
     print("Votre nom est déjà attribuer.. \nNouveau nom:", name2, "!")
-player3: Player = Player(name2)
+player3: Player = Player(name2, random.choice(merveille))
 players = (player1, player2, player3)
 index = players.index(active_player)
 
@@ -473,12 +482,30 @@ def print_player_card(player):
 
 
 def can_construct_wonder() -> bool:
-    return False
+    resources = ("bois", "pierre", "verre", "soie", "papier", "brique")
+    if active_player.palier == 1:
+        cout = active_player.merveille[2].split(" | ")[0]
+    if active_player.palier == 2:
+        cout = active_player.merveille[2].split(" | ")[1]
+    if active_player.palier == 3:
+        cout = active_player.merveille[2].split(" | ")[2]
+        for resource in resources :
+            if resource in cout:
+                pass
 
+def print_merveille():
+    i: int
+    cout_age = active_player.merveille[2].split(" | ")
+    offre_age = active_player.merveille[3].split(" | ")
+    print(merveille[0])
+    for i in range(len(cout_age)):
+        print("l'amélioration du palier", i+1, "coûte : ", cout_age[i])
+        print("l'amélioration du palier", i+1, "coûte : ", offre_age[i])
 
 def age_loop():
     clear_console()
     print("TOUR DE _-=", active_player.name, "=-_")
+    print_merveille()
     print_player_card(active_player)
     print_resources()
     time.sleep(2)
