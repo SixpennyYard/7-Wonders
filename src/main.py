@@ -33,7 +33,6 @@ with open('resources/merveille.csv', newline='') as csvfile:
     for row in reader:
         merveille.append([row[0], row[1], row[2], row[3]])
 
-
 with open('resources/premier_age.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     next(reader)
@@ -45,14 +44,18 @@ clear_console()
 print("Lancement du Jeu ...")
 
 # initialisation des joueurs
-player1: Player = Player(input("Quel est le nom du premier joueur ? "), random.choice(merveille))
+merveille_player = random.choice(merveille)
+merveille.remove(merveille_player)
+player1: Player = Player(input("Quel est le nom du premier joueur ? "), merveille_player)
 active_player = player1
 
 name = input("Quel est le nom du deuxième joueur ? ")
+merveille_player = random.choice(merveille)
+merveille.remove(merveille_player)
 if name == player1.name:
     name += " (2)"
     print("Votre nom est déjà attribuer.. \nNouveau nom:", name, "!")
-player2: Player = Player(name, random.choice(merveille))
+player2: Player = Player(name, merveille_player)
 
 name2 = input("Quel est le nom du troisième joueur ? ")
 if name2 == player1.name and name2 + " (2)" == player2.name:
@@ -61,7 +64,9 @@ if name2 == player1.name and name2 + " (2)" == player2.name:
 elif name2 == player1.name or name2 == player2.name:
     name2 += " (2)"
     print("Votre nom est déjà attribuer.. \nNouveau nom:", name2, "!")
-player3: Player = Player(name2, random.choice(merveille))
+    merveille_player = random.choice(merveille)
+    merveille.remove(merveille_player)
+player3: Player = Player(name2, merveille_player)
 players = (player1, player2, player3)
 index = players.index(active_player)
 
@@ -498,9 +503,10 @@ def can_construct_wonder() -> bool:
                 return True
             else:
                 x = int(cout[0]) - player_resource
-                if active_player.money >= x*2:
+                if active_player.money >= x * 2:
                     return True
     return False
+
 
 def build_wonder():
     resources = ("bois", "pierre", "verre", "soie", "papier", "brique")
@@ -542,10 +548,10 @@ def build_wonder():
                         active_player.symbole = "engrenage"
             else:
                 x = int(cout[0]) - player_resource
-                if active_player.money >= x*2:
+                if active_player.money >= x * 2:
                     offre = active_player.merveille[3].split(" | ")[active_player.palier - 1]
                     active_player.palier += 1
-                    active_player.money -= x*2
+                    active_player.money -= x * 2
                     if "culture" in offre:
                         active_player.culture += int(offre[0])
                     elif "guerre" in offre:
@@ -557,14 +563,17 @@ def build_wonder():
                         active_player.has_free_bat = True
     return False
 
+
 def print_merveille():
-    i: int
     cout_age = active_player.merveille[2].split(" | ")
     offre_age = active_player.merveille[3].split(" | ")
-    print(merveille[0])
-    for i in range(len(cout_age)):
-        print("l'amélioration du palier", i+1, "coûte : ", cout_age[i])
-        print("l'amélioration du palier", i+1, "coûte : ", offre_age[i])
+    print(f"Votre merveille est: {active_player.merveille[0]}\nVous êtes au palier n°{active_player.palier}/3\n\n")
+    print("l'amélioration du palier", active_player.palier, "coûte : ", cout_age[active_player.palier - 1])
+    print("")
+    print("l'amélioration du palier", active_player.palier, "offre : ", offre_age[active_player.palier - 1])
+    print("")
+    print("")
+
 
 def age_loop():
     clear_console()
@@ -595,8 +604,14 @@ def age_loop():
 
         if action.isdigit():
             discard.append(active_player.hand[int(action) - 1])
-            del active_player.hand[int(action) - 1]
             active_player.money += 2 + len(active_player.yellow)
+            clear_console()
+            print(f"Vous venez de défausser la carte {active_player.hand[int(action) - 1].name};"
+                  f"\n    elle offrait: {active_player.hand[int(action) - 1].offer}"
+                  f"\n    elle coutait: {active_player.hand[int(action) - 1].coast}"
+                  f"\n\nVous avez maintenant {active_player.money} pièces")
+            del active_player.hand[int(action) - 1]
+            time.sleep(7)
             set_next_active()
         else:
             return
@@ -605,7 +620,7 @@ def age_loop():
         if not can_play(active_player):
             clear_console()
             print("Vous ne pouvez pas jouer...")
-            time.sleep(2)
+            time.sleep(3)
             return
         else:
             clear_console()
@@ -649,11 +664,47 @@ def age_loop():
                 if played.coast != "" and played.coast.split(" ")[1] == "piece":
                     build_card(played)
                     active_player.money -= int(played.coast.split(" ")[0])
+                clear_console()
+                print(f"Vous venez de construire la carte {played.name} qui vous offre {played.offer}."
+                      f"\nVous avez {active_player.money} pièce(s).")
+                time.sleep(7)
                 set_next_active()
     else:
         if can_construct_wonder():
+            clear_console()
+            print("Vous allez devoir choisir la carte à défausser pour construire votre merveille !")
+            time.sleep(4)
+            clear_console()
+            print_hand()
+            action = input(f"Donnez le numéro de la carde que vous voulez défauser OU écrivez 'retour' pour revenir en "
+                           "arrière : ")
+            while action != "retour" and (
+                    not action.isdigit() or int(action) < 1 or int(action) > len(active_player.hand)):
+                action = input("Veuillez entrer 'retour' ou le numéro d'une de vos carte (numéro de 1 à "
+                               + str(len(active_player.hand)) + ") : ")
+
+            if action.isdigit():
+                discard.append(active_player.hand[int(action) - 1])
+                clear_console()
+                print(f"Vous venez de défausser la carte {active_player.hand[int(action) - 1].name};"
+                      f"\n    elle offrait: {active_player.hand[int(action) - 1].offer}"
+                      f"\n    elle coutait: {active_player.hand[int(action) - 1].coast}"
+                      f"\n\nVous avez maintenant {active_player.money} pièces")
+                del active_player.hand[int(action) - 1]
+                time.sleep(4)
+            else:
+                return
             build_wonder()
+            clear_console()
+            print(f"Vous venez de construire le palier n°{active_player.palier - 1} de la merveille "
+                  f"{active_player.merveille[0]}.\nVous avez {active_player.money} pièce(s).")
+            time.sleep(7)
             set_next_active()
+        else:
+            clear_console()
+            print("Vous ne pouvez pas construire de merveille...")
+            time.sleep(3)
+            return
 
 
 while len(player3.hand) > 1:
@@ -665,6 +716,7 @@ if player2.has_free_bat:
     player2.free_bat = 1
 if player3.has_free_bat:
     player3.free_bat = 1
+
 
 def count_war_point(adding_war: int):
     player1_war_point: int = 0
