@@ -110,6 +110,20 @@ class Player:
 
         return count
 
+    def count_resource(self, resource: str):
+        if resource == "bois":
+            return self.count_wood()
+        elif resource == "soie":
+            return self.count_silk()
+        elif resource == "papier":
+            return self.count_paper()
+        elif resource == "verre":
+            return self.count_glass()
+        elif resource == "brique":
+            return self.count_brick()
+        elif resource == "pierre":
+            return self.count_stone()
+
     def evaluate_ressources(self) -> int:
         evaluation: int = 0
         resources: tuple = (
