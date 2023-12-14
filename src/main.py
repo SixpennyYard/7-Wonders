@@ -281,7 +281,7 @@ def can_play_split(card_coast: list[str], player):
 
 def can_play(player) -> bool:
     for card in player.hand:
-        if card.coast == "" or card.coast is None:
+        if card.coast == "" or card.coast is None or player.free_bat == 1:
             return True
         else:
             if "&" in card.coast:
@@ -451,7 +451,7 @@ def build_split_card(coast: str):
 
 
 def build_card(played):
-    if played.coast != "":
+    if played.coast != "" or active_player.free_bat == 1:
         if "&" in played.coast:
             coasts: list[str] = played.coast.split(" & ")
             for coast in coasts:
@@ -459,6 +459,8 @@ def build_card(played):
         else:
             build_split_card(played.coast)
     active_player.playable_hand.clear()
+    if played.coast != "" and active_player.has_free_bat:
+        active_player.free_bat -= 1
 
 
 def print_player_card(player):
@@ -489,9 +491,71 @@ def can_construct_wonder() -> bool:
         cout = active_player.merveille[2].split(" | ")[1]
     if active_player.palier == 3:
         cout = active_player.merveille[2].split(" | ")[2]
-        for resource in resources :
-            if resource in cout:
-                pass
+    for resource in resources:
+        if resource in cout:
+            player_resource = active_player.count_resource(resource)
+            if int(cout[0]) <= player_resource:
+                return True
+            else:
+                x = int(cout[0]) - player_resource
+                if active_player.money >= x*2:
+                    return True
+    return False
+
+def build_wonder():
+    resources = ("bois", "pierre", "verre", "soie", "papier", "brique")
+    if active_player.palier == 1:
+        cout = active_player.merveille[2].split(" | ")[0]
+    if active_player.palier == 2:
+        cout = active_player.merveille[2].split(" | ")[1]
+    if active_player.palier == 3:
+        cout = active_player.merveille[2].split(" | ")[2]
+    for resource in resources:
+        if resource in cout:
+            player_resource = active_player.count_resource(resource)
+            if int(cout[0]) <= player_resource:
+                offre = active_player.merveille[3].split(" | ")[active_player.palier - 1]
+                active_player.palier += 1
+                if "culture" in offre:
+                    active_player.culture += int(offre[0])
+                elif "guerre" in offre:
+                    active_player.war += int(offre[0])
+                elif "piece" in offre:
+                    active_player.money += int(offre[0])
+                elif "free_bat" in offre:
+                    active_player.free_bat += 1
+                    active_player.has_free_bat = True
+                elif "resource" in offre:
+                    active_player.cheating_resource
+                elif "defausse" in offre:
+                    for card in discard:
+                        print(card.name, card.offer)
+                elif "vert" in offre:
+                    choice = input("tablette(1), compas(2), engrenage(3) : ")
+                    while int(choice) != 1 or int(choice) != 2 or int(choice) != 3:
+                        choice = input("tablette(1), compas(2), engrenage(3) : ")
+                    if choice == 1:
+                        active_player.symbole = "tablette"
+                    if choice == 2:
+                        active_player.symbole = "compas"
+                    if choice == 3:
+                        active_player.symbole = "engrenage"
+            else:
+                x = int(cout[0]) - player_resource
+                if active_player.money >= x*2:
+                    offre = active_player.merveille[3].split(" | ")[active_player.palier - 1]
+                    active_player.palier += 1
+                    active_player.money -= x*2
+                    if "culture" in offre:
+                        active_player.culture += int(offre[0])
+                    elif "guerre" in offre:
+                        active_player.war += int(offre[0])
+                    elif "piece" in offre:
+                        active_player.money += int(offre[0])
+                    elif "free_bat" in offre:
+                        active_player.free_bat += 1
+                        active_player.has_free_bat = True
+    return False
 
 def print_merveille():
     i: int
@@ -587,26 +651,33 @@ def age_loop():
                     active_player.money -= int(played.coast.split(" ")[0])
                 set_next_active()
     else:
-        if not can_construct_wonder():
-            return
+        if can_construct_wonder():
+            build_wonder()
+            set_next_active()
 
 
 while len(player3.hand) > 1:
     age_loop()
 
+if player1.has_free_bat:
+    player1.free_bat = 1
+if player2.has_free_bat:
+    player2.free_bat = 1
+if player3.has_free_bat:
+    player3.free_bat = 1
 
 def count_war_point(adding_war: int):
     player1_war_point: int = 0
     for red_card in player1.red:
-        player1_war_point += int(red_card.offer[0])
+        player1_war_point += int(red_card.offer[0]) + player1.war
 
     player2_war_point: int = 0
     for red_card in player2.red:
-        player2_war_point += int(red_card.offer[0])
+        player2_war_point += int(red_card.offer[0]) + player2.war
 
     player3_war_point: int = 0
     for red_card in player3.red:
-        player3_war_point += int(red_card.offer[0])
+        player3_war_point += int(red_card.offer[0]) + player3.war
 
     if player1_war_point > player2_war_point:
         player1.war_point += adding_war
@@ -697,7 +768,7 @@ def final_score_blue(player: Player):
     score_blue = 0
     for card in player.blue:
         score_blue += int(card.offer[0])
-    return score_blue
+    return score_blue + player.culture
 
 
 def final_score_red(player: Player):
@@ -757,6 +828,7 @@ def final_score_green(player: Player):
         green_score += 9
     elif nb_compas == 4:
         green_score += 16
+    # TODO: player.symbole a add
     return green_score
 
 

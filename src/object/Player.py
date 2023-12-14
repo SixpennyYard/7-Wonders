@@ -18,6 +18,12 @@ class Player:
         self.yellow_point: int = 0
         self.merveille = merveille
         self.palier = 1
+        self.culture = 0
+        self.war = 0
+        self.free_bat = 0
+        self.has_free_bat = False
+        self.cheating_resource = False
+        self.symbole = ""
 
     def count_wood(self) -> int:
         count: int = 0
@@ -28,6 +34,8 @@ class Player:
             if "bois" in resource.offer:
                 count += 1
         if self.merveille[1] == "bois":
+            count += 1
+        if self.cheating_resource:
             count += 1
 
         return count
@@ -42,6 +50,8 @@ class Player:
                 count += 1
         if self.merveille[1] == "brique":
             count += 1
+        if self.cheating_resource:
+            count += 1
 
         return count
 
@@ -54,6 +64,8 @@ class Player:
             if "or" in resource.offer:
                 count += 1
         if self.merveille[1] == "or":
+            count += 1
+        if self.cheating_resource:
             count += 1
 
         return count
@@ -68,6 +80,8 @@ class Player:
                 count += 1
         if self.merveille[1] == "pierre":
             count += 1
+        if self.cheating_resource:
+            count += 1
 
         return count
 
@@ -80,6 +94,8 @@ class Player:
             if "verre" in resource.offer:
                 count += 1
         if self.merveille[1] == "verre":
+            count += 1
+        if self.cheating_resource:
             count += 1
 
         return count
@@ -94,6 +110,8 @@ class Player:
                 count += 1
         if self.merveille[1] == "papier":
             count += 1
+        if self.cheating_resource:
+            count += 1
 
         return count
 
@@ -106,6 +124,8 @@ class Player:
             if "soie" in resource.offer:
                 count += 1
         if self.merveille[1] == "soie":
+            count += 1
+        if self.cheating_resource:
             count += 1
 
         return count
