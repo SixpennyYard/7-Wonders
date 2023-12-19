@@ -941,6 +941,5 @@ print(players_score[1][0].name, "avec un score de:", players_score[1][1])
 print("Et pour finir en dernier :'(")
 print(players_score[2][0].name, "avec un score de:", players_score[2][1])
 
-
 def age():
     return age
