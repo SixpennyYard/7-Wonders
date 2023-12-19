@@ -848,45 +848,98 @@ def final_score_money(player: Player):
     return player.money // 3
 
 
-def final_score_green(player: Player):
-    green_symbole: list[str] = []
+def fianl_score_green():
     green_score = 0
-    for card in player.green:
-        green_symbole.append(card.offer)
-    nb_engrenage = green_symbole.count("Engrenage")
-    nb_tablette = green_symbole.count("Tablette")
-    nb_compas = green_symbole.count("Compas")
-    if nb_engrenage == 1:
-        green_score += 1
-    elif nb_engrenage == 2:
-        green_score += 4
-    elif nb_engrenage == 3:
-        green_score += 9
-    elif nb_engrenage == 4:
-        green_score += 16
-    if nb_tablette == 1:
-        green_score += 1
-    elif nb_tablette == 2:
-        green_score += 4
-    elif nb_tablette == 3:
-        green_score += 9
-    elif nb_tablette == 4:
-        green_score += 16
-    if nb_compas == 1:
-        green_score += 1
-    elif nb_compas == 2:
-        green_score += 4
-    elif nb_compas == 3:
-        green_score += 9
-    elif nb_compas == 4:
-        green_score += 16
-    # TODO: player.symbole a add
+    green_score1 = 0
+    green_score2 = 0
+    green_score3 = 0
+    nb_engrenage = 3
+    nb_tablette = 2
+    nb_compas = 1
+    i = 0
+    test1 = 0
+    test2 = 0
+    test3 = 0
+    while i < 3:
+        if i == 0:
+            nb_engrenage += 1
+            green_score1 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+            nb_engrenage -= 1
+            i += 1
+        elif i == 1:
+            nb_tablette += 1
+            green_score2 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+            nb_tablette -= 1
+            i += 1
+        elif i == 2:
+            nb_compas += 1
+            green_score3 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+            nb_compas -= 1
+            i += 1
+    if green_score1 >= green_score2 and green_score1 >= green_score3:
+        green_score = green_score1
+    elif green_score2 >= green_score1 and green_score2 >= green_score3:
+        green_score = green_score2
+    else:
+        green_score = green_score3
     return green_score
+
+
+def green_score_fonc(nb_engrenage, nb_tablette, nb_compas):
+    green_scoreok = 0
+    if nb_engrenage == 1:
+        green_scoreok += 1
+    elif nb_engrenage == 2:
+        green_scoreok += 4
+    elif nb_engrenage == 3:
+        green_scoreok += 9
+    elif nb_engrenage == 4:
+        green_scoreok += 16
+    if nb_tablette == 1:
+        green_scoreok += 1
+    elif nb_tablette == 2:
+        green_scoreok += 4
+    elif nb_tablette == 3:
+        green_scoreok += 9
+    elif nb_tablette == 4:
+        green_scoreok += 16
+    if nb_compas == 1:
+        green_scoreok += 1
+    elif nb_compas == 2:
+        green_scoreok += 4
+    elif nb_compas == 3:
+        green_scoreok += 9
+    elif nb_compas == 4:
+        green_scoreok += 16
+
+    while nb_engrenage > 0 and nb_tablette > 0 and nb_compas > 0:
+        nb_engrenage -= 1
+        nb_tablette -= 1
+        nb_compas -= 1
+        green_scoreok += 7
+
+    return green_scoreok
 
 
 def final_score(player: Player):
     return (final_score_yellow(player) + final_score_blue(player) + final_score_green(player)
             + final_score_money(player) + final_score_red(player))
+
+players_score = [[player1, final_score(player1)], [player1, final_score(player2)], [player1, final_score(player3)]]
+players_score.sort(key=lambda x: x[1], reverse=True)
+clear_console()
+print("Voici les scores !")
+
+time.sleep(1)
+print("En premier....")
+print(players_score[0][0].name, "avec un score de:", players_score[0][1])
+
+time.sleep(3)
+print("En deuxieme....")
+print(players_score[1][0].name, "avec un score de:", players_score[1][1])
+
+print("Et pour finir en dernier :'(")
+print(players_score[2][0].name, "avec un score de:", players_score[2][1])
 
 
 def age():
