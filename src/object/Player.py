@@ -23,7 +23,7 @@ class Player:
         self.free_bat = 0
         self.has_free_bat = False
         self.cheating_resource = False
-        self.symbole = ""
+        self.symbole = False
 
     def count_wood(self) -> int:
         count: int = 0
@@ -169,30 +169,30 @@ class Player:
 
     def print_yellow(self):
         for i in self.yellow:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")
 
     def print_brown(self):
         for i in self.brown:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")
 
     def print_grey(self):
         for i in self.grey:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")
 
     def print_green(self):
         for i in self.green:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")
 
     def print_red(self):
         for i in self.red:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")
 
     def print_blue(self):
         for i in self.blue:
-            print(f"Nom: {i.name}\nCoût: {i.coast if i.coast != "" else "Aucun"}\nOffre: {i.offer}"
+            print(f"Nom: {i.name}\nCoût: {i.cost if i.cost != "" else "Aucun"}\nOffre: {i.offer}"
                   f"\nBatiment précédent: {i.free_offer if i.free_offer != "" else "Aucun"}\n\n")

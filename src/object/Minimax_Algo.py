@@ -64,8 +64,8 @@ cards = cards[7:]
 def print_hand():
     print("Voici votre main:")
     for i in range(len(active_player.hand)):
-        if active_player.hand[i].coast != "":
-            print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût]", active_player.hand[i].coast)
+        if active_player.hand[i].cost != "":
+            print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût]", active_player.hand[i].cost)
         else:
             print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût] Aucun")
 
@@ -88,10 +88,10 @@ def set_next_active():
 
 def playable_hand(player: Player):
     for card in player.hand:
-        if card.coast == "" or card.coast is None:
+        if card.cost == "" or card.cost is None:
             player.playable_hand.append(card)
         else:
-            card_coast = card.coast.split(" ")
+            card_coast = card.cost.split(" ")
             if card_coast[1] == "piece" and int(card_coast[0]) <= player.money:
                 player.playable_hand.append(card)
             elif card_coast[1] == "bois" and int(card_coast[0]) <= (player.count_wood()
@@ -122,18 +122,18 @@ def print_playable_hand():
     print("Voici ce que vous pouvez jouer:")
     for i in range(len(active_player.playable_hand)):
         if active_player.playable_hand[i].color != "y":
-            if active_player.playable_hand[i].coast != "":
+            if active_player.playable_hand[i].cost != "":
                 print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                      active_player.playable_hand[i].coast, "| [Offre]", active_player.playable_hand[i].offer)
+                      active_player.playable_hand[i].cost, "| [Offre]", active_player.playable_hand[i].offer)
             else:
                 print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût] Aucun | [Offre]",
                       active_player.playable_hand[i].offer)
         else:
             if active_player.playable_hand[i].name == "Comptoir Ouest":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               ia.count_wood(), ", Pierre(s):", ia.count_stone(), ", Brique(s):",
                               ia.count_brick(), ", Or:", ia.count_gold())
                     else:
@@ -141,9 +141,9 @@ def print_playable_hand():
                               ia.count_wood(), ", Pierre(s):", ia.count_stone(), ", Brique(s):",
                               ia.count_brick(), ", Or:", ia.count_gold())
                 elif active_player == ia:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               ia2.count_wood(), ", Pierre(s):", ia2.count_stone(), ", Brique(s):",
                               ia2.count_brick(), ", Or:", ia2.count_gold())
                     else:
@@ -151,9 +151,9 @@ def print_playable_hand():
                               ia2.count_wood(), ", Pierre(s):", ia2.count_stone(), ", Brique(s):",
                               ia2.count_brick(), ", Or:", ia2.count_gold())
                 elif active_player == ia2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                     else:
@@ -162,9 +162,9 @@ def print_playable_hand():
                               player1.count_brick(), ", Or:", player1.count_gold())
             elif active_player.playable_hand[i].name == "Comptoir Est":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               ia2.count_wood(), ", Pierre(s):", ia2.count_stone(), ", Brique(s):",
                               ia2.count_brick(), ", Or:", ia2.count_gold())
                     else:
@@ -172,9 +172,9 @@ def print_playable_hand():
                               ia2.count_wood(), ", Pierre(s):", ia2.count_stone(), ", Brique(s):",
                               ia2.count_brick(), ", Or:", ia2.count_gold())
                 elif active_player == ia:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                     else:
@@ -182,9 +182,9 @@ def print_playable_hand():
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                 elif active_player == ia2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               ia.count_wood(), ", Pierre(s):", ia.count_stone(), ", Brique(s):",
                               ia.count_brick(), ", Or:", ia.count_gold())
                     else:
@@ -193,9 +193,9 @@ def print_playable_hand():
                               ia.count_brick(), ", Or:", ia.count_gold())
             elif active_player.playable_hand[i].name == "Marche":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               ia2.count_glass() + ia.count_glass(), ", Papier(s):",
                               ia2.count_paper() + ia.count_paper(), ", Soie(s):",
                               ia2.count_silk() + ia.count_silk())
@@ -206,9 +206,9 @@ def print_playable_hand():
                               ia2.count_paper() + ia.count_paper(), ", Soie(s):",
                               ia2.count_silk() + ia.count_silk())
                 elif active_player == ia:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               ia2.count_glass() + player1.count_glass(), ", Papier(s):",
                               ia2.count_paper() + player1.count_paper(), ", Soie(s):",
                               ia2.count_silk() + player1.count_silk())
@@ -219,9 +219,9 @@ def print_playable_hand():
                               ia2.count_paper() + player1.count_paper(), ", Soie(s):",
                               ia2.count_silk() + player1.count_silk())
                 elif active_player == ia2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               ia.count_glass() + player1.count_glass(), ", Papier(s):",
                               ia.count_paper() + player1.count_paper(), ", Soie(s):",
                               ia.count_silk() + player1.count_silk())
@@ -261,15 +261,15 @@ def can_play_split(card_coast: list[str], player):
 
 def can_play(player) -> bool:
     for card in player.hand:
-        if card.coast == "" or card.coast is None:
+        if card.cost == "" or card.cost is None:
             return True
         else:
-            if "&" in card.coast:
-                card_coasts: list[str] = card.coast.split(" & ")
+            if "&" in card.cost:
+                card_coasts: list[str] = card.cost.split(" & ")
                 for card_coast in card_coasts:
                     can_play_split(card_coast, player)
             else:
-                card_coast: list[str] = card.coast.split(" ")
+                card_coast: list[str] = card.cost.split(" ")
                 can_play_split(card_coast, player)
     return False
 
@@ -431,13 +431,13 @@ def build_split_card(coast: str):
 
 
 def build_card(played):
-    if played.coast != "":
-        if "&" in played.coast:
-            coasts: list[str] = played.coast.split(" & ")
+    if played.cost != "":
+        if "&" in played.cost:
+            coasts: list[str] = played.cost.split(" & ")
             for coast in coasts:
                 build_split_card(coast)
         else:
-            build_split_card(played.coast)
+            build_split_card(played.cost)
     active_player.playable_hand.clear()
 
 
@@ -470,13 +470,13 @@ def _possible_move() -> list[str]:
 
 
 def algo_build_card(played, player: Player):
-    if played.coast != "":
-        if "&" in played.coast:
-            coasts: list[str] = played.coast.split(" & ")
+    if played.cost != "":
+        if "&" in played.cost:
+            coasts: list[str] = played.cost.split(" & ")
             for coast in coasts:
                 algo_build_split_card(coast, player)
         else:
-            algo_build_split_card(played.coast, player)
+            algo_build_split_card(played.cost, player)
     player.playable_hand.clear()
 
 
@@ -611,9 +611,9 @@ def age_loop():
                         build_card(played)
                         active_player.grey.append(played)
 
-                    if played.coast != "" and played.coast.split(" ")[1] == "piece":
+                    if played.cost != "" and played.cost.split(" ")[1] == "piece":
                         build_card(played)
-                        active_player.money -= int(played.coast.split(" ")[0])
+                        active_player.money -= int(played.cost.split(" ")[0])
                     set_next_active()
         else:
             if not can_construct_wonder():
