@@ -665,6 +665,12 @@ def age_loop():
                     build_card(played)
                     active_player.money -= int(played.coast.split(" ")[0])
                 clear_console()
+                if played.name == "Port":
+                    active_player.money += len(active_player.brown)
+                elif played.name == "Phare":
+                    active_player.money += len(active_player.yellow)
+                elif played.name == "Arene":
+                    active_player.money += 1 * (active_player.palier - 1)
                 print(f"Vous venez de construire la carte {played.name} qui vous offre {played.offer}."
                       f"\nVous avez {active_player.money} pièce(s).")
                 time.sleep(7)
@@ -762,7 +768,6 @@ age += 1
 time.sleep(2)
 
 # initialisation des jeux
-# TODO: Faire les enchainages...
 with open('resources/deuxieme_age.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, delimiter=',')
     next(reader)
@@ -771,7 +776,7 @@ with open('resources/deuxieme_age.csv', newline='') as csvfile:
         if len(row) < 5:
             cards.append(Card(row[0], row[1], row[2], row[3]))
         else:
-            cards.append(Card(row[0], row[1], row[2], row[3], row[4]))
+            cards.append(Card(row[0], row[1], row[2], row[3]))
 
 random.shuffle(cards)
 player1.hand.extend(cards[:7])
@@ -815,7 +820,6 @@ count_war_point(5)
 discard.clear()
 
 
-# TODO: Compter les points des carte guilde et de la science !
 def final_score_blue(player: Player):
     score_blue = 0
     for card in player.blue:
@@ -830,17 +834,25 @@ def final_score_red(player: Player):
 def final_score_yellow(player: Player):
     point: int = 0
     named_yellow: list[list[str, str]] = [["Port", "marron"], ["Phare", "marron"],
-                                          ["Chambre de Commerce", "marron"], ["Arene", "marron"]]
+                                          ["Chambre de Commerce", "marron"], ["Arene", "marron"],
+                                          ["Guilde des artisans", "gris"], ["Guilde des philosophe", "vert"],
+                                          ["Guilde des espions", "rouge"], ["Guilde des magistrats", "bleu"]]
     for card in named_yellow:
         if player.has_yellow_card(card[0]):
             if card[1] == "marron":
                 point += len(player.brown)
             elif card[1] == "yellow":
                 point += len(player.yellow)
-            elif card[1] == "girs":
-                point += len(player.grey) * 2
+            elif card[1] == "gris":
+                point += len(player.grey)
+            elif card[1] == "vert":
+                point += len(player.grey)
+            elif card[1] == "rouge":
+                point += len(player.grey)
+            elif card[1] == "bleu":
+                point += len(player.grey)
             else:
-                point += 0  # TODO: 1 * le nombre d'etage de merveille construite.
+                point += 1 * (player.palier - 1)
     return point
 
 

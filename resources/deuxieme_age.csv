@@ -1,22 +1,22 @@
-Nom, Cout, Offre, Couleur, Enchainage
-Scierie, 1 piece, 2 bois, b,
-Carriere, 1 piece, 2 pierre, b
-Briquetiere, 1 piece, 2 brique, b
-Fonderie, 1 piece, 2 or, b
-Metier a tisser, , 1 soie, grey,
-Verrerie, , 1 verre, grey,
-Presse, , 1 papier, grey
-Aqueduc, 3 brique, 5 culture, blue
-Temple, 1 bois & 1 brique & 1 verre, 3 culture, blue
-Statue, 2 or & 1 bois, 4 culture, blue
-Tribunal, 2 brique & 1 soie, 4 culture, blue
-Forum, 2 brique, 1 soir / 1 verre / 1 papier, y
-Caravanserail,2 bois, 1 brique / 1 bois / 1 or / 1 pierre, y
-Vignoble, ,marron partout, y
-Muraille, 3 pierre, 2 guerre, r
-Ecuries, 1 or & 1 brique & 1 bois, 2 guerre, r
-Champs de tir, 1 or & 2 bois, 2 guerre, r
-Laboratoire, 2 brique & 1 papier,Engrenage, g,
-Bibliotheque, 2 pierre & 1 soie,Tablette, g
-Ecole, 1 bois & 1 papier,Tablette, g
-Dispensaire, 2 or & 1 verre,Compas, g
+Nom,Cout,Offre,Couleur
+Scierie,1 piece,2 bois,b,
+Carriere,1 piece,2 pierre,b
+Briquetiere,1 piece,2 brique,b
+Fonderie,1 piece,2 or,b
+Metier a tisser,,1 soie,grey,
+Verrerie,,1 verre,grey,
+Presse,,1 papier,grey
+Aqueduc,3 brique,5 culture,blue
+Temple,1 bois & 1 brique & 1 verre,3 culture,blue
+Statue,2 or & 1 bois,4 culture,blue
+Tribunal,2 brique & 1 soie,4 culture,blue
+Forum,2 brique,1 soir / 1 verre / 1 papier,y
+Caravanserail,2 bois,1 brique / 1 bois / 1 or / 1 pierre,y
+Vignoble,,marron partout, y
+Muraille,3 pierre,2 guerre, r
+Ecuries,1 or & 1 brique & 1 bois,2 guerre,r
+Champs de tir,1 or & 2 bois,2 guerre,r
+Laboratoire,2 brique & 1 papier,Engrenage,g,
+Bibliotheque,2 pierre & 1 soie,Tablette,g
+Ecole,1 bois & 1 papier,Tablette,g
+Dispensaire,2 or & 1 verre,Compas,g

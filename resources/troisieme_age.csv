@@ -1,0 +1,21 @@
+Nom,Cout,Offre,Couleur
+Pantheon,2 brique & 1 or & 1 papier & 1 soie & 1 verre,7 culture,blue
+Jardins,2 brique & 1 bois,5 culture,blue
+Hotel de Ville,2 pierre & 1 or & verre,6 culture,blue
+Palace,1 brique & 1 bois & 1 pierre & 1 verre & 1 papier & 1 soie,8 culture,blue
+Senat,2 bois & 1 or & 1 pierre,6 culture,blue
+Port,1 or & 1 bois & 1 soie,recompense carte maron,y
+Phare,2 brique & 1 papier,recompense carte jaune,y
+Arene,2 pierre & 1 or,recompense merveille,y
+Guilde des artisans,2 or & 2 pierre,recompense carte grise,y
+Guilde des philosophe,3 brique & 1 soie & 1 papier,recompense carte vert,y
+Guilde des espions,3 brique & 1 verre,recompense carte rouge,y
+Guilde des magistrats,3 bois & 1 pierre & 1 soie,recompense carte bleu,y
+Fortification,3 or & 1 pierre,3 guerre,r
+Arsenal,1 or & 2 bois & 1 soie,3 guerre,r
+Atelier de siege,1 bois & 3 brique,3 guerre,r
+Loge,2 brique & 1 soie & 1 papier,Compas,g
+Observatoire,2 or & 1 verre & 1 soie,Engrenage,g
+Universite,2 bois & 1 papier & 1 verre,Tablette,g
+Academie,3 pierre & 1 verre,Compas,g
+Etude,1 bois & 1 papier & 1 soie,Engrenage,g
