@@ -89,8 +89,8 @@ cards = cards[7:]
 def print_hand():
     print("Voici votre main:")
     for i in range(len(active_player.hand)):
-        if active_player.hand[i].coast != "":
-            print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût]", active_player.hand[i].coast)
+        if active_player.hand[i].cost != "":
+            print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût]", active_player.hand[i].cost)
         else:
             print(" -", i + 1, "- ", active_player.hand[i].name, "[Coût] Aucun")
 
@@ -113,31 +113,31 @@ def set_next_active():
 
 def playable_hand(player: Player):
     for card in player.hand:
-        if card.coast == "" or card.coast is None:
+        if card.cost == "" or card.cost is None:
             player.playable_hand.append(card)
         else:
-            card_coast = card.coast.split(" ")
-            if card_coast[1] == "piece" and int(card_coast[0]) <= player.money:
+            card_cost = card.cost.split(" ")
+            if card_cost[1] == "piece" and int(card_cost[0]) <= player.money:
                 player.playable_hand.append(card)
-            elif card_coast[1] == "bois" and int(card_coast[0]) <= (player.count_wood()
+            elif card_cost[1] == "bois" and int(card_cost[0]) <= (player.count_wood()
                                                                     or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "brique" and int(card_coast[0]) <= (player.count_brick()
+            elif card_cost[1] == "brique" and int(card_cost[0]) <= (player.count_brick()
                                                                       or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "or" and int(card_coast[0]) <= (player.count_gold()
+            elif card_cost[1] == "or" and int(card_cost[0]) <= (player.count_gold()
                                                                   or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "verre" and int(card_coast[0]) <= (player.count_glass()
+            elif card_cost[1] == "verre" and int(card_cost[0]) <= (player.count_glass()
                                                                      or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "pierre" and int(card_coast[0]) <= (player.count_stone()
+            elif card_cost[1] == "pierre" and int(card_cost[0]) <= (player.count_stone()
                                                                       or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "papier" and int(card_coast[0]) <= (player.count_paper()
+            elif card_cost[1] == "papier" and int(card_cost[0]) <= (player.count_paper()
                                                                       or player.money > 2):
                 player.playable_hand.append(card)
-            elif card_coast[1] == "soie" and int(card_coast[0]) <= (player.count_silk()
+            elif card_cost[1] == "soie" and int(card_cost[0]) <= (player.count_silk()
                                                                     or player.money > 2):
                 player.playable_hand.append(card)
 
@@ -147,18 +147,18 @@ def print_playable_hand():
     print("Voici ce que vous pouvez jouer:")
     for i in range(len(active_player.playable_hand)):
         if active_player.playable_hand[i].color != "y":
-            if active_player.playable_hand[i].coast != "":
+            if active_player.playable_hand[i].cost != "":
                 print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                      active_player.playable_hand[i].coast, "| [Offre]", active_player.playable_hand[i].offer)
+                      active_player.playable_hand[i].cost, "| [Offre]", active_player.playable_hand[i].offer)
             else:
                 print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût] Aucun | [Offre]",
                       active_player.playable_hand[i].offer)
         else:
             if active_player.playable_hand[i].name == "Comptoir Ouest":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player2.count_wood(), ", Pierre(s):", player2.count_stone(), ", Brique(s):",
                               player2.count_brick(), ", Or:", player2.count_gold())
                     else:
@@ -166,9 +166,9 @@ def print_playable_hand():
                               player2.count_wood(), ", Pierre(s):", player2.count_stone(), ", Brique(s):",
                               player2.count_brick(), ", Or:", player2.count_gold())
                 elif active_player == player2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player3.count_wood(), ", Pierre(s):", player3.count_stone(), ", Brique(s):",
                               player3.count_brick(), ", Or:", player3.count_gold())
                     else:
@@ -176,9 +176,9 @@ def print_playable_hand():
                               player3.count_wood(), ", Pierre(s):", player3.count_stone(), ", Brique(s):",
                               player3.count_brick(), ", Or:", player3.count_gold())
                 elif active_player == player3:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                     else:
@@ -187,9 +187,9 @@ def print_playable_hand():
                               player1.count_brick(), ", Or:", player1.count_gold())
             elif active_player.playable_hand[i].name == "Comptoir Est":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player3.count_wood(), ", Pierre(s):", player3.count_stone(), ", Brique(s):",
                               player3.count_brick(), ", Or:", player3.count_gold())
                     else:
@@ -197,9 +197,9 @@ def print_playable_hand():
                               player3.count_wood(), ", Pierre(s):", player3.count_stone(), ", Brique(s):",
                               player3.count_brick(), ", Or:", player3.count_gold())
                 elif active_player == player2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                     else:
@@ -207,9 +207,9 @@ def print_playable_hand():
                               player1.count_wood(), ", Pierre(s):", player1.count_stone(), ", Brique(s):",
                               player1.count_brick(), ", Or:", player1.count_gold())
                 elif active_player == player3:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Bois:",
+                              active_player.playable_hand[i].cost, "| [Offre] Bois:",
                               player2.count_wood(), ", Pierre(s):", player2.count_stone(), ", Brique(s):",
                               player2.count_brick(), ", Or:", player2.count_gold())
                     else:
@@ -218,9 +218,9 @@ def print_playable_hand():
                               player2.count_brick(), ", Or:", player2.count_gold())
             elif active_player.playable_hand[i].name == "Marche":
                 if active_player == player1:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               player3.count_glass() + player2.count_glass(), ", Papier(s):",
                               player3.count_paper() + player2.count_paper(), ", Soie(s):",
                               player3.count_silk() + player2.count_silk())
@@ -231,9 +231,9 @@ def print_playable_hand():
                               player3.count_paper() + player2.count_paper(), ", Soie(s):",
                               player3.count_silk() + player2.count_silk())
                 elif active_player == player2:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               player3.count_glass() + player1.count_glass(), ", Papier(s):",
                               player3.count_paper() + player1.count_paper(), ", Soie(s):",
                               player3.count_silk() + player1.count_silk())
@@ -244,9 +244,9 @@ def print_playable_hand():
                               player3.count_paper() + player1.count_paper(), ", Soie(s):",
                               player3.count_silk() + player1.count_silk())
                 elif active_player == player3:
-                    if active_player.playable_hand[i].coast != "":
+                    if active_player.playable_hand[i].cost != "":
                         print(" -", i + 1, "- ", active_player.playable_hand[i].name, "| [Coût]",
-                              active_player.playable_hand[i].coast, "| [Offre] Verre(s):",
+                              active_player.playable_hand[i].cost, "| [Offre] Verre(s):",
                               player2.count_glass() + player1.count_glass(), ", Papier(s):",
                               player2.count_paper() + player1.count_paper(), ", Soie(s):",
                               player2.count_silk() + player1.count_silk())
@@ -258,44 +258,44 @@ def print_playable_hand():
                               player2.count_silk() + player1.count_silk())
 
 
-def can_play_split(card_coast: list[str], player):
-    if card_coast[1] == "piece" and int(card_coast[0]) <= player.money:
+def can_play_split(card_cost: list[str], player):
+    if card_cost[1] == "piece" and int(card_cost[0]) <= player.money:
         return True
-    elif card_coast[1] == "bois" and (int(card_coast[0]) <= player.count_wood()
-                                      or player.money > 2):
+    elif card_cost[1] == "bois" and (int(card_cost[0]) <= player.count_wood()
+                                     or player.money > 2):
         return True
-    elif card_coast[1] == "brique" and (int(card_coast[0]) <= player.count_brick()
-                                        or player.money > 2):
+    elif card_cost[1] == "brique" and (int(card_cost[0]) <= player.count_brick()
+                                       or player.money > 2):
         return True
-    elif card_coast[1] == "or" and (int(card_coast[0]) <= player.count_gold()
-                                    or player.money > 2):
+    elif card_cost[1] == "or" and (int(card_cost[0]) <= player.count_gold()
+                                   or player.money > 2):
         return True
-    elif card_coast[1] == "verre" and int(card_coast[0]) <= (player.count_glass()
-                                                             or player.money > 2):
+    elif card_cost[1] == "verre" and int(card_cost[0]) <= (player.count_glass()
+                                                           or player.money > 2):
         return True
-    elif card_coast[1] == "pierre" and int(card_coast[0]) <= (player.count_stone()
-                                                              or player.money > 2):
-        return True
-    elif card_coast[1] == "papier" and int(card_coast[0]) <= (player.count_paper()
-                                                              or player.money > 2):
-        return True
-    elif card_coast[1] == "soie" and int(card_coast[0]) <= (player.count_silk()
+    elif card_cost[1] == "pierre" and int(card_cost[0]) <= (player.count_stone()
                                                             or player.money > 2):
+        return True
+    elif card_cost[1] == "papier" and int(card_cost[0]) <= (player.count_paper()
+                                                            or player.money > 2):
+        return True
+    elif card_cost[1] == "soie" and int(card_cost[0]) <= (player.count_silk()
+                                                          or player.money > 2):
         return True
 
 
 def can_play(player) -> bool:
     for card in player.hand:
-        if card.coast == "" or card.coast is None or player.free_bat == 1:
+        if card.cost == "" or card.cost is None or player.free_bat == 1:
             return True
         else:
-            if "&" in card.coast:
-                card_coasts: list[str] = card.coast.split(" & ")
-                for card_coast in card_coasts:
-                    can_play_split(card_coast, player)
+            if "&" in card.cost:
+                card_costs: list[str] = card.cost.split(" & ")
+                for card_cost in card_costs:
+                    can_play_split(card_cost, player)
             else:
-                card_coast: list[str] = card.coast.split(" ")
-                can_play_split(card_coast, player)
+                card_cost: list[str] = card.cost.split(" ")
+                can_play_split(card_cost, player)
     return False
 
 
@@ -372,8 +372,8 @@ def print_resources():
     print("Verre:", glass, "   |    Papier(s):", papers, "   |    Soie(s):", silks)
 
 
-def build_split_card(coast: str):
-    if "bois" in coast.split(" ")[1] and active_player.count_wood() == 0:
+def build_split_card(cost: str):
+    if "bois" in cost.split(" ")[1] and active_player.count_wood() == 0:
         if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_wood() > 0:
@@ -385,7 +385,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "pierre" in coast.split(" ")[1] and active_player.count_stone() == 0:
+    if "pierre" in cost.split(" ")[1] and active_player.count_stone() == 0:
         if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_stone() > 0:
@@ -397,7 +397,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "brique" in coast.split(" ")[1] and active_player.count_brick() == 0:
+    if "brique" in cost.split(" ")[1] and active_player.count_brick() == 0:
         if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_brick() > 0:
@@ -409,7 +409,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "or" in coast.split(" ")[1] and active_player.count_gold() == 0:
+    if "or" in cost.split(" ")[1] and active_player.count_gold() == 0:
         if active_player.has_yellow_card("Comptoire Est"):
             right: Player = players[(index + 1) % 3]
             if right.count_gold() > 0:
@@ -421,7 +421,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "papier" in coast.split(" ")[1] and active_player.count_paper() == 0:
+    if "papier" in cost.split(" ")[1] and active_player.count_paper() == 0:
         if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
@@ -432,7 +432,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "verre" in coast.split(" ")[1] and active_player.count_glass() == 0:
+    if "verre" in cost.split(" ")[1] and active_player.count_glass() == 0:
         if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
@@ -443,7 +443,7 @@ def build_split_card(coast: str):
         else:
             active_player.money -= 2
 
-    if "soie" in coast.split(" ")[1] and active_player.count_silk() == 0:
+    if "soie" in cost.split(" ")[1] and active_player.count_silk() == 0:
         if active_player.has_yellow_card("Marche"):
             right: Player = players[(index + 1) % 3]
             left: Player = players[(index - 1) % 3]
@@ -456,15 +456,15 @@ def build_split_card(coast: str):
 
 
 def build_card(played):
-    if played.coast != "" or active_player.free_bat == 1:
-        if "&" in played.coast:
-            coasts: list[str] = played.coast.split(" & ")
-            for coast in coasts:
-                build_split_card(coast)
+    if played.cost != "" or active_player.free_bat == 1:
+        if "&" in played.cost:
+            costs: list[str] = played.cost.split(" & ")
+            for cost in costs:
+                build_split_card(cost)
         else:
-            build_split_card(played.coast)
+            build_split_card(played.cost)
     active_player.playable_hand.clear()
-    if played.coast != "" and active_player.has_free_bat:
+    if played.cost != "" and active_player.has_free_bat:
         active_player.free_bat -= 1
 
 
@@ -537,15 +537,7 @@ def build_wonder():
                     for card in discard:
                         print(card.name, card.offer)
                 elif "vert" in offre:
-                    choice = input("tablette(1), compas(2), engrenage(3) : ")
-                    while int(choice) != 1 or int(choice) != 2 or int(choice) != 3:
-                        choice = input("tablette(1), compas(2), engrenage(3) : ")
-                    if choice == 1:
-                        active_player.symbole = "tablette"
-                    if choice == 2:
-                        active_player.symbole = "compas"
-                    if choice == 3:
-                        active_player.symbole = "engrenage"
+                    active_player.symbole = True
             else:
                 x = int(cout[0]) - player_resource
                 if active_player.money >= x * 2:
@@ -608,7 +600,7 @@ def age_loop():
             clear_console()
             print(f"Vous venez de défausser la carte {active_player.hand[int(action) - 1].name};"
                   f"\n    elle offrait: {active_player.hand[int(action) - 1].offer}"
-                  f"\n    elle coutait: {active_player.hand[int(action) - 1].coast}"
+                  f"\n    elle coutait: {active_player.hand[int(action) - 1].cost}"
                   f"\n\nVous avez maintenant {active_player.money} pièces")
             del active_player.hand[int(action) - 1]
             time.sleep(7)
@@ -661,9 +653,9 @@ def age_loop():
                     build_card(played)
                     active_player.grey.append(played)
 
-                if played.coast != "" and played.coast.split(" ")[1] == "piece":
+                if played.cost != "" and played.cost.split(" ")[1] == "piece":
                     build_card(played)
-                    active_player.money -= int(played.coast.split(" ")[0])
+                    active_player.money -= int(played.cost.split(" ")[0])
                 clear_console()
                 if played.name == "Port":
                     active_player.money += len(active_player.brown)
@@ -694,7 +686,7 @@ def age_loop():
                 clear_console()
                 print(f"Vous venez de défausser la carte {active_player.hand[int(action) - 1].name};"
                       f"\n    elle offrait: {active_player.hand[int(action) - 1].offer}"
-                      f"\n    elle coutait: {active_player.hand[int(action) - 1].coast}"
+                      f"\n    elle coutait: {active_player.hand[int(action) - 1].cost}"
                       f"\n\nVous avez maintenant {active_player.money} pièces")
                 del active_player.hand[int(action) - 1]
                 time.sleep(4)
@@ -860,40 +852,52 @@ def final_score_money(player: Player):
     return player.money // 3
 
 
-def fianl_score_green():
+def final_score_green(player):
     green_score = 0
     green_score1 = 0
     green_score2 = 0
     green_score3 = 0
-    nb_engrenage = 3
-    nb_tablette = 2
-    nb_compas = 1
-    i = 0
-    test1 = 0
-    test2 = 0
-    test3 = 0
-    while i < 3:
-        if i == 0:
+    nb_engrenage = 0
+    nb_tablette = 0
+    nb_compas = 0
+    for engrenage in player.green:
+        if engrenage.cost == "Engrenage":
             nb_engrenage += 1
-            green_score1 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
-            nb_engrenage -= 1
-            i += 1
-        elif i == 1:
+    for tablette in player.green:
+        if tablette.cost == "Tablette":
             nb_tablette += 1
-            green_score2 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
-            nb_tablette -= 1
-            i += 1
-        elif i == 2:
+    for compas in player.green:
+        if compas.cost == "Compas":
             nb_compas += 1
-            green_score3 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
-            nb_compas -= 1
-            i += 1
-    if green_score1 >= green_score2 and green_score1 >= green_score3:
-        green_score = green_score1
-    elif green_score2 >= green_score1 and green_score2 >= green_score3:
-        green_score = green_score2
+    if player.symbole:
+        i = 0
+        test1 = 0
+        test2 = 0
+        test3 = 0
+        while i < 3:
+            if i == 0:
+                nb_engrenage += 1
+                green_score1 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+                nb_engrenage -= 1
+                i += 1
+            elif i == 1:
+                nb_tablette += 1
+                green_score2 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+                nb_tablette -= 1
+                i += 1
+            elif i == 2:
+                nb_compas += 1
+                green_score3 += green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
+                nb_compas -= 1
+                i += 1
+        if green_score1 >= green_score2 and green_score1 >= green_score3:
+            green_score = green_score1
+        elif green_score2 >= green_score1 and green_score2 >= green_score3:
+            green_score = green_score2
+        else:
+            green_score = green_score3
     else:
-        green_score = green_score3
+        green_score = green_score_fonc(nb_engrenage, nb_tablette, nb_compas)
     return green_score
 
 
